@@ -35,9 +35,9 @@ add Control = Control_L" >> ~/.Xmodmap
 
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 # To fix the trackpad speed, tap-to-click, and reverse scrolling:
-sed -i 's/^.*name="Acceleration".*$/    <property name="Acceleration" type="double" value="3.500000"/>' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-sed -i 's/^.*name="libinput_Tapping_Enabled".*$/      <property name="libinput_Tapping_Enabled" type="int" value="1"/>' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-sed -i 's/^.*name="ReverseScrolling".*$/    <property name="ReverseScrolling" type="bool" value="true"/>' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="3.500000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 
 log "Installing sublime"
 #################
@@ -78,11 +78,11 @@ log "fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key"
 # sudo dpkg-reconfigure keyboard-configuration
 # open Window Manager / Keyboard tab and set:
 #   Cycle windows(223) Ctrl+Tab:
-sed -i 's/^.* value="cycle_windows_key".*$/      <property name="&lt;Primary&gt;Tab" type="string" value="cycle_windows_key"/>' xfce4-keyboard-shortcuts.xml.
+sed -i 's|^.* value="cycle_windows_key".*$|      <property name="\&lt;Primary\&gt;Tab" type="string" value="cycle_windows_key"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 #   Cycle windows Reverse(225) Shift+Ctrl+LeftTab:
-sed -i 's/^.* value="cycle_reverse_windows_key".*$/      <property name="&lt;Primary&gt;&lt;Shift&gt;ISO_Left_Tab" type="string" value="cycle_reverse_windows_key"/>' xfce4-keyboard-shortcuts.xml.
+sed -i 's|^.* value="cycle_reverse_windows_key".*$|      <property name="\&lt;Primary\&gt;\&lt;Shift\&gt;ISO_Left_Tab" type="string" value="cycle_reverse_windows_key"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 #   Switch window for same app Ctrl+`:
-sed -i 's/^.* value="switch_window_key".*$/      <property name="&lt;Primary&gt;grave" type="string" value="switch_window_key"/>' xfce4-keyboard-shortcuts.xml.
+sed -i 's|^.* value="switch_window_key".*$|      <property name="\&lt;Primary\&gt;grave" type="string" value="switch_window_key"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 
 log "Xmodmap"
 xmodmap ~/.Xmodmap
