@@ -113,14 +113,14 @@ git config --global user.name "bob"
 # sudo apt-get install cheese
 
 # chrome
-# open https://www.google.com/chrome
-
+log "installing chrome"
+# found the url in https://www.google.com/chrome
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i ~/Downloads/google-chrome-stable_current_amd64.deb
 
-sudo apt install supertux
+# sudo apt install supertux
 
-# Bluetooth
+log "installing Bluetooth"
 sudo apt install bluez*
 sudo apt install blueman
 sudo systemctl enable bluetooth.service
