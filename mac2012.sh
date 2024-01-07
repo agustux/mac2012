@@ -7,23 +7,19 @@ function log {
   echo "$(date -uIs) $msg"
 }
 
-# To update this file to drive:
-# cp mac2012.sh /media/agustin/DRAWINGS
-
-log "Wifi"
-# wifi:
-sudo apt install bcmwl-kernel-source
-
-log "applying security updates..."
+log "applying security updates"
 # https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line
 # sudo unattended-upgrade --debug --dry-run
 sudo unattended-upgrade
+
+# log "Wifi"
+# sudo apt install bcmwl-kernel-source
 
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
 # also fixes the tap instead of click trackpad issue:
 sudo apt remove xserver-xorg-input-synaptics
 
-log "installing xmodmap..."
+log "installing xmodmap"
 sudo apt install xkeycaps
 xmodmap -pke > ~/.Xmodmap
 
@@ -50,29 +46,27 @@ sudo apt-get update
 sudo apt-get install sublime-text
 
 log "Configuring sublime"
-# subl ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
-echo "// and are overridden in turn by syntax-specific settings.
+echo '// and are overridden in turn by syntax-specific settings.
 {
   "open_files_in_new_window": "never",
   "tab_size": 2,
   "translate_tabs_to_spaces": true,
 // Settings in here override those in "Default/Preferences.sublime-settings",
   "trim_trailing_white_space_on_save": "all",
-}" >> ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
+}' >> ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
-# subl ~/.config/sublime-text/Packages/User/Default.sublime-keymap
-echo "[
+echo '[
   { "keys": ["ctrl+left"], "command": "move_to", "args": {"to": "bol", "extend": false} },
   { "keys": ["ctrl+right"], "command": "move_to", "args": {"to": "eol", "extend": false} },
   { "keys": ["ctrl+up"], "command": "move_to", "args": {"to": "bof", "extend": false} },
   { "keys": ["ctrl+down"], "command": "move_to", "args": {"to": "eof", "extend": false} },
   { "keys": ["ctrl+g"], "command": "find_next" },
-]" >> ~/.config/sublime-text/Packages/User/Default.sublime-keymap
+]' >> ~/.config/sublime-text/Packages/User/Default.sublime-keymap
 
-log "fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key"
 ##########################
 # Mac Keyboard mapping
 ##########################
+log "fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key"
 
 # select macbook pro (not sure this is necessary):
 # sudo dpkg-reconfigure keyboard-configuration
@@ -84,21 +78,24 @@ sed -i 's|^.* value="cycle_reverse_windows_key".*$|      <property name="\&lt;Pr
 #   Switch window for same app Ctrl+`:
 sed -i 's|^.* value="switch_window_key".*$|      <property name="\&lt;Primary\&gt;grave" type="string" value="switch_window_key"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 
-log "Xmodmap"
+log "load Xmodmap"
 xmodmap ~/.Xmodmap
 
+log "configure terminal copy&paste shortcuts"
 # terminal
 # https://forum.xfce.org/viewtopic.php?id=12105
 # https://unix.stackexchange.com/questions/271150/how-to-set-ctrlc-to-copy-ctrlv-to-paste-and-ctrlshiftc-to-kill-process-in-x
 # subl ~/.config/xfce4/terminal/accels.scm
-echo "(gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
-(gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")" >> ~/.config/xfce4/terminal/accels.scm
+echo '(gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
+(gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")' >> ~/.config/xfce4/terminal/accels.scm
 
-log "Git stuff"
 #################
 # Git
 #################
+log "install git"
 sudo apt install git
+
+log "set git aliases"
 git config --global alias.co checkout
 git config --global alias.br branch
 git config --global alias.ci commit
