@@ -7,41 +7,12 @@ function log {
   echo "$(date -uIs) $msg"
 }
 
-log "creating backups for the affected files"
-cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
-cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
-cp ~/.config/sublime-text/Packages/User/Preferences.sublime-settings{,.bak}
-cp ~/.config/sublime-text/Packages/User/Default.sublime-keymap{,.bak}
-cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml{.bak}
-cp ~/.config/xfce4/terminal/accels.scm{,.bak}
-
-log "applying security updates"
-# https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line
-# sudo unattended-upgrade --debug --dry-run
-sudo unattended-upgrade
-
-# log "Wifi"
-# sudo apt install bcmwl-kernel-source
-
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
 # also fixes the tap instead of click trackpad issue:
-sudo apt remove xserver-xorg-input-synaptics
+sudo apt remove xserver-xorg-input-synaptic
 
-log "installing xmodmap"
-sudo apt install xkeycaps
-xmodmap -pke > ~/.Xmodmap
-
-log "fixing Ctrl to Cmd for shortcuts"
-echo "! bind left command key as another Ctrl key
-remove mod4 = Super_L
-keysym Super_L = Control_L
-add Control = Control_L" >> ~/.Xmodmap
-
-log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
-# To fix the trackpad speed, tap-to-click, and reverse scrolling:
-sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="3.500000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+log "Wifi"
+sudo apt install bcmwl-kernel-source -y
 
 log "Installing sublime"
 #################
@@ -51,7 +22,9 @@ log "Installing sublime"
 wget -qO - https://download.sublimetext.com/sublimehq-pub.gpg | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/sublimehq-archive.gpg > /dev/null
 echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sources.list.d/sublime-text.list
 sudo apt-get update
-sudo apt-get install sublime-text
+sudo apt-get install sublime-text -y
+
+subl
 
 log "Configuring sublime"
 echo '// and are overridden in turn by syntax-specific settings.
@@ -70,6 +43,35 @@ echo '[
   { "keys": ["ctrl+down"], "command": "move_to", "args": {"to": "eof", "extend": false} },
   { "keys": ["ctrl+g"], "command": "find_next" },
 ]' >> ~/.config/sublime-text/Packages/User/Default.sublime-keymap
+
+#log "creating backups for the affected files"
+#cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
+#cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
+#cp ~/.config/sublime-text/Packages/User/Preferences.sublime-settings{,.bak}
+#cp ~/.config/sublime-text/Packages/User/Default.sublime-keymap{,.bak}
+#cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml{.bak}
+cp ~/.config/xfce4/terminal/accels.scm{,.bak}
+
+log "applying security updates"
+# https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line
+# sudo unattended-upgrade --debug --dry-run
+sudo unattended-upgrade
+
+log "installing xmodmap"
+sudo apt install xkeycaps -y
+xmodmap -pke > ~/.Xmodmap
+
+log "fixing Ctrl to Cmd for shortcuts"
+echo "! bind left command key as another Ctrl key
+remove mod4 = Super_L
+keysym Super_L = Control_L
+add Control = Control_L" >> ~/.Xmodmap
+
+log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
+# To fix the trackpad speed, tap-to-click, and reverse scrolling:
+sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 
 ##########################
 # Mac Keyboard mapping
@@ -101,7 +103,7 @@ echo '(gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
 # Git
 #################
 log "install git"
-sudo apt install git
+sudo apt install git -y
 
 log "set git aliases"
 git config --global alias.co checkout
@@ -126,14 +128,18 @@ sudo dpkg -i ~/Downloads/google-chrome-stable_current_amd64.deb
 # sudo apt install supertux
 
 log "installing Bluetooth"
-sudo apt install bluez*
-sudo apt install blueman
+sudo apt install bluez* -y
+sudo apt install blueman -y
 sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 sudo rfkill unblock bluetooth
 
 echo "to apply these changes run:"
 echo "sudo reboot"
+
+log "fixing the theme and stuff"
+sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 
 ###############
 # Users
