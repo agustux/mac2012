@@ -7,6 +7,14 @@ function log {
   echo "$(date -uIs) $msg"
 }
 
+log "creating backups for the affected files"
+cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
+cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
+cp ~/.config/sublime-text/Packages/User/Preferences.sublime-settings{,.bak}
+cp ~/.config/sublime-text/Packages/User/Default.sublime-keymap{,.bak}
+cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml{.bak}
+cp ~/.config/xfce4/terminal/accels.scm{,.bak}
+
 log "applying security updates"
 # https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line
 # sudo unattended-upgrade --debug --dry-run
