@@ -67,10 +67,10 @@ sudo apt install xkeycaps -y
 xmodmap -pke > ~/.Xmodmap
 
 log "fixing Ctrl to Cmd for shortcuts"
-echo "! bind left command key as another Ctrl key
-remove mod4 = Super_L
-keysym Super_L = Control_L
-add Control = Control_L" >> ~/.Xmodmap
+#echo "! bind left command key as another Ctrl key
+#remove mod4 = Super_L
+#keysym Super_L = Control_L
+#add Control = Control_L" >> ~/.Xmodmap
 
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 # To fix the trackpad speed, tap-to-click, and reverse scrolling:
@@ -143,8 +143,13 @@ echo "to apply these changes run:"
 echo "sudo reboot"
 
 log "fixing the theme and stuff"
-sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
-sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/etc/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+# how to create a patch file:
+# - create a backup of the original: x.original
+# - create the new file: x.new
+# - create a patch file: diff -u x.original x.new > x.patch
+# - apply the patch: patch --backup x x.patch
+sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' /home/agustin/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' /home/agustin/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 
 ###############
 # Users
