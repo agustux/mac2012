@@ -7,9 +7,14 @@ function log {
   echo "$(date -uIs) $msg"
 }
 
+if [[ "$(cat /sys/class/power_supply/ADP1/online)" == "0" ]]; then
+  echo "Charger is not plugged in: security updates will not run without power"
+  exit 1
+fi
+
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
 # also fixes the tap instead of click trackpad issue:
-sudo apt remove xserver-xorg-input-synaptic
+ # TEMP sudo apt remove xserver-xorg-input-synaptic
 
 log "Wifi"
 sudo apt install bcmwl-kernel-source -y
