@@ -7,13 +7,19 @@ function log {
   echo "$(date -uIs) $msg"
 }
 
+function backup {
+  log "creating a backup of $1"
+  d=$(date -uIs)
+  cp $1 $1.$d
+}
+
 if [[ "$(cat /sys/class/power_supply/ADP1/online)" == "0" ]]; then
   echo "Charger is not plugged in: security updates will not run without power"
   exit 1
 fi
 
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
-# also fixes the tap instead of click trackpad issue:
+# also may fix the tap instead of click trackpad issue:
  # TEMP sudo apt remove xserver-xorg-input-synaptic
 
 log "Wifi"
@@ -32,6 +38,8 @@ sudo apt-get install sublime-text -y
 subl
 
 log "Configuring sublime"
+backup ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
+
 echo '// and are overridden in turn by syntax-specific settings.
 {
   "open_files_in_new_window": "never",
@@ -41,6 +49,8 @@ echo '// and are overridden in turn by syntax-specific settings.
   "trim_trailing_white_space_on_save": "all",
 }' >> ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
+backup ~/.config/sublime-text/Packages/User/Default.sublime-keymap{,.bak}
+
 echo '[
   { "keys": ["ctrl+left"], "command": "move_to", "args": {"to": "bol", "extend": false} },
   { "keys": ["ctrl+right"], "command": "move_to", "args": {"to": "eol", "extend": false} },
@@ -48,14 +58,6 @@ echo '[
   { "keys": ["ctrl+down"], "command": "move_to", "args": {"to": "eof", "extend": false} },
   { "keys": ["ctrl+g"], "command": "find_next" },
 ]' >> ~/.config/sublime-text/Packages/User/Default.sublime-keymap
-
-#log "creating backups for the affected files"
-#cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
-#cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
-#cp ~/.config/sublime-text/Packages/User/Preferences.sublime-settings{,.bak}
-#cp ~/.config/sublime-text/Packages/User/Default.sublime-keymap{,.bak}
-#cp ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml{.bak}
-cp ~/.config/xfce4/terminal/accels.scm{,.bak}
 
 log "applying security updates"
 # https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line
@@ -67,12 +69,17 @@ sudo apt install xkeycaps -y
 xmodmap -pke > ~/.Xmodmap
 
 log "fixing Ctrl to Cmd for shortcuts"
-#echo "! bind left command key as another Ctrl key
-#remove mod4 = Super_L
-#keysym Super_L = Control_L
-#add Control = Control_L" >> ~/.Xmodmap
+echo "! bind left command key as another Ctrl key
+remove mod4 = Super_L
+keysym Super_L = Control_L
+add Control = Control_L" >> ~/.Xmodmap
+
+xmodmap ~/.Xmodmap
 
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
+
+backup ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
+
 # To fix the trackpad speed, tap-to-click, and reverse scrolling:
 sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
@@ -84,9 +91,11 @@ sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" ty
 log "fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key"
 
 # select macbook pro (not sure this is necessary):
-# sudo dpkg-reconfigure keyboard-configuration
+sudo dpkg-reconfigure keyboard-configuration
 # open Window Manager / Keyboard tab and set:
 #   Cycle windows(223) Ctrl+Tab:
+backup ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml{.bak}
+
 sed -i 's|^.* value="cycle_windows_key".*$|      <property name="\&lt;Primary\&gt;Tab" type="string" value="cycle_windows_key"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 #   Cycle windows Reverse(225) Shift+Ctrl+LeftTab:
 sed -i 's|^.* value="cycle_reverse_windows_key".*$|      <property name="\&lt;Primary\&gt;\&lt;Shift\&gt;ISO_Left_Tab" type="string" value="cycle_reverse_windows_key"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
@@ -97,6 +106,8 @@ log "load Xmodmap"
 xmodmap ~/.Xmodmap
 
 log "configure terminal copy&paste shortcuts"
+backup ~/.config/xfce4/terminal/accels.scm{,.bak}
+
 # terminal
 # https://forum.xfce.org/viewtopic.php?id=12105
 # https://unix.stackexchange.com/questions/271150/how-to-set-ctrlc-to-copy-ctrlv-to-paste-and-ctrlshiftc-to-kill-process-in-x
