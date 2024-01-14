@@ -20,7 +20,7 @@ fi
 
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
 # also may fix the tap instead of click trackpad issue:
- # TEMP sudo apt remove xserver-xorg-input-synaptic
+sudo apt remove xserver-xorg-input-synaptics -y
 
 log "Wifi"
 sudo apt install bcmwl-kernel-source -y
