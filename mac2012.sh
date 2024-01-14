@@ -10,7 +10,7 @@ function log {
 function backup {
   log "creating a backup of $1"
   d=$(date -uIs)
-  cp $1 $1.$d
+  sudo cp $1 $1.$d
 }
 
 if [[ "$(cat /sys/class/power_supply/ADP1/online)" == "0" ]]; then
@@ -49,7 +49,7 @@ echo '// and are overridden in turn by syntax-specific settings.
   "trim_trailing_white_space_on_save": "all",
 }' >> ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
-backup ~/.config/sublime-text/Packages/User/Default.sublime-keymap{,.bak}
+backup ~/.config/sublime-text/Packages/User/Default.sublime-keymap
 
 echo '[
   { "keys": ["ctrl+left"], "command": "move_to", "args": {"to": "bol", "extend": false} },
@@ -78,7 +78,7 @@ xmodmap ~/.Xmodmap
 
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 
-backup ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml{,.bak}
+backup ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 
 # To fix the trackpad speed, tap-to-click, and reverse scrolling:
 sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
@@ -106,7 +106,7 @@ log "load Xmodmap"
 xmodmap ~/.Xmodmap
 
 log "configure terminal copy&paste shortcuts"
-backup ~/.config/xfce4/terminal/accels.scm{,.bak}
+backup ~/.config/xfce4/terminal/accels.scm
 
 # terminal
 # https://forum.xfce.org/viewtopic.php?id=12105
@@ -154,13 +154,8 @@ echo "to apply these changes run:"
 echo "sudo reboot"
 
 log "fixing the theme and stuff"
-# how to create a patch file:
-# - create a backup of the original: x.original
-# - create the new file: x.new
-# - create a patch file: diff -u x.original x.new > x.patch
-# - apply the patch: patch --backup x x.patch
-sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' /home/agustin/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
-sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' /home/agustin/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 
 ###############
 # Users
