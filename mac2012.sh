@@ -88,7 +88,7 @@ sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" ty
 log "fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key"
 
 # select macbook pro (not sure this is necessary):
-sudo dpkg-reconfigure keyboard-configuration
+# sudo dpkg-reconfigure keyboard-configuration
 # open Window Manager / Keyboard tab and set:
 #   Cycle windows(223) Ctrl+Tab:
 
