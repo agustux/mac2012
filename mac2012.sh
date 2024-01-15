@@ -18,6 +18,11 @@ if [[ "$(cat /sys/class/power_supply/ADP1/online)" == "0" ]]; then
   exit 1
 fi
 
+log "applying security updates"
+# https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line
+# sudo unattended-upgrade --debug --dry-run
+sudo unattended-upgrade
+
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
 sudo apt remove xserver-xorg-input-synaptics
 
@@ -55,11 +60,6 @@ echo '[
   { "keys": ["ctrl+down"], "command": "move_to", "args": {"to": "eof", "extend": false} },
   { "keys": ["ctrl+g"], "command": "find_next" },
 ]' >> ~/.config/sublime-text/Packages/User/Default.sublime-keymap
-
-log "applying security updates"
-# https://askubuntu.com/questions/194/how-can-i-install-just-security-updates-from-the-command-line
-# sudo unattended-upgrade --debug --dry-run
-sudo unattended-upgrade
 
 log "installing xmodmap"
 sudo apt install xkeycaps -y
