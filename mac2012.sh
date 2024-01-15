@@ -20,7 +20,7 @@ fi
 
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
 # also may fix the tap instead of click trackpad issue:
-sudo apt remove xserver-xorg-input-synaptics -y
+ # TEMP sudo apt remove xserver-xorg-input-synaptic
 
 log "Wifi"
 sudo apt install bcmwl-kernel-source -y
@@ -156,6 +156,9 @@ echo "sudo reboot"
 log "fixing the theme and stuff"
 sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+
+sudo apt install virt-manager -y
+# sudo mv xubuntu-22.04.3-desktop-amd64.iso /var/local
 
 ###############
 # Users
