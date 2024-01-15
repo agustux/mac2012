@@ -38,7 +38,6 @@ sudo apt-get install sublime-text -y
 subl
 
 log "Configuring sublime"
-#backup ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
 echo '// and are overridden in turn by syntax-specific settings.
 {
@@ -49,7 +48,6 @@ echo '// and are overridden in turn by syntax-specific settings.
   "trim_trailing_white_space_on_save": "all",
 }' >> ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
-#backup ~/.config/sublime-text/Packages/User/Default.sublime-keymap
 
 echo '[
   { "keys": ["ctrl+left"], "command": "move_to", "args": {"to": "bol", "extend": false} },
@@ -78,7 +76,6 @@ xmodmap ~/.Xmodmap
 
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 
-#backup ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 
 # To fix the trackpad speed, tap-to-click, and reverse scrolling:
 sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
@@ -94,7 +91,6 @@ log "fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key"
 sudo dpkg-reconfigure keyboard-configuration
 # open Window Manager / Keyboard tab and set:
 #   Cycle windows(223) Ctrl+Tab:
-#backup ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml{.bak}
 
 sed -i 's|^.* value="cycle_windows_key".*$|      <property name="\&lt;Primary\&gt;Tab" type="string" value="cycle_windows_key"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 #   Cycle windows Reverse(225) Shift+Ctrl+LeftTab:
@@ -106,7 +102,6 @@ log "load Xmodmap"
 xmodmap ~/.Xmodmap
 
 log "configure terminal copy&paste shortcuts"
-#backup ~/.config/xfce4/terminal/accels.scm
 
 # terminal
 # https://forum.xfce.org/viewtopic.php?id=12105
