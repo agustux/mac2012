@@ -128,6 +128,7 @@ git config --global alias.ci commit
 git config --global alias.st status
 git config --global user.email "billy@gmail.com"
 git config --global user.name "bob"
+ssh-keygen -t ed25519 -C "$(whoami)@xubuntu" -N "" -f ~/.ssh/id_ed25519
 
 # picture editor
 # sudo apt-get install gthumb
@@ -150,15 +151,18 @@ sudo systemctl enable bluetooth.service
 sudo systemctl start bluetooth.service
 sudo rfkill unblock bluetooth
 
-echo "to apply these changes run:"
-echo "sudo reboot"
-
 log "fixing the theme and stuff"
 sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 
 sudo apt install virt-manager -y
 # sudo mv xubuntu-22.04.3-desktop-amd64.iso /var/local
+
+log "remember to upload the following key to your github account:"
+cat ~/.ssh/id_ed25519.pub
+
+echo "to apply these changes run:"
+echo "sudo reboot"
 
 ###############
 # Users
