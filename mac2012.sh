@@ -181,6 +181,9 @@ echo "sudo reboot"
 # sudo cryptsetup luksAddKey /dev/sda3
 # sudo cryptsetup luksRemoveKey /dev/sda3
 
+# CHANGE USER PASSWORD
+# passwd
+
 # remove John's rule:
 # iptables -L OUTPUT --line-numbers
 # iptables -D INPUT 1
