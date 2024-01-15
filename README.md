@@ -1,2 +1,2 @@
 # mac2012
-hello
+automated xubuntu configurations for macbook 2012
