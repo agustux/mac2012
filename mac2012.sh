@@ -20,8 +20,12 @@ sudo unattended-upgrade
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
 sudo apt remove xserver-xorg-input-synaptics -y
 
-log "Wifi"
-sudo apt install bcmwl-kernel-source -y
+if sudo lshw -C network | grep description: | grep Wireless; then
+  log "Wifi"
+  sudo apt install bcmwl-kernel-source -y
+else
+  log "Skipping Wifi"
+fi
 
 # log "fixing the theme and stuff"
 # sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
