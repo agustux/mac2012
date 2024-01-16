@@ -4,12 +4,12 @@ set -e
 
 function log {
   local msg=$1
-  echo "$(date -uIs) $msg"
+  echo "$(date -Is) $msg"
 }
 
 function backup {
   log "creating a backup of $1"
-  d=$(date -uIs)
+  d=$(date -Is)
   sudo cp $1 $1.$d
 }
 
