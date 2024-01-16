@@ -23,9 +23,9 @@ sudo apt remove xserver-xorg-input-synaptics -y
 log "Wifi"
 sudo apt install bcmwl-kernel-source -y
 
-log "fixing the theme and stuff"
-sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
-sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+# log "fixing the theme and stuff"
+# sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+# sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 
 ##########################
 # Mac Keyboard mapping
