@@ -18,7 +18,7 @@ log "applying security updates"
 sudo unattended-upgrade
 
 log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
-sudo apt remove xserver-xorg-input-synaptics
+sudo apt remove xserver-xorg-input-synaptics -y
 
 log "Wifi"
 sudo apt install bcmwl-kernel-source -y
