@@ -39,7 +39,11 @@ echo "deb https://download.sublimetext.com/ apt/stable/" | sudo tee /etc/apt/sou
 sudo apt-get update
 sudo apt-get install sublime-text -y
 
+log "opening sublime to create default config files"
 subl
+sleep 2
+log "closing sublime"
+pkill sublime_text
 
 log "Configuring sublime"
 
@@ -51,7 +55,6 @@ echo '// and are overridden in turn by syntax-specific settings.
 // Settings in here override those in "Default/Preferences.sublime-settings",
   "trim_trailing_white_space_on_save": "all",
 }' >> ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
-
 
 echo '[
   { "keys": ["ctrl+left"], "command": "move_to", "args": {"to": "bol", "extend": false} },
@@ -70,13 +73,9 @@ echo "! bind left command key as another Ctrl key
 remove mod4 = Super_L
 keysym Super_L = Control_L
 add Control = Control_L" >> ~/.Xmodmap
-
 xmodmap ~/.Xmodmap
 
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
-
-
-# To fix the trackpad speed, tap-to-click, and reverse scrolling:
 sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
