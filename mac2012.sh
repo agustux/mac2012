@@ -7,12 +7,6 @@ function log {
   echo "$(date -Is) $msg"
 }
 
-function backup {
-  log "creating a backup of $1"
-  d=$(date -Is)
-  sudo cp $1 $1.$d
-}
-
 if [[ "$(cat /sys/class/power_supply/ADP1/online)" == "0" ]]; then
   echo "Charger is not plugged in: security updates will not run without power"
   exit 1
