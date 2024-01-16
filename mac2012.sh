@@ -17,9 +17,6 @@ log "applying security updates"
 # sudo unattended-upgrade --debug --dry-run
 sudo unattended-upgrade
 
-log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
-sudo apt remove xserver-xorg-input-synaptics -y
-
 if sudo lshw -C network | grep description: | grep Wireless; then
   log "Wifi"
   sudo apt install bcmwl-kernel-source -y
@@ -27,10 +24,10 @@ else
   log "Skipping Wifi"
 fi
 
-# log "fixing the theme and stuff"
+log "fixing the theme and stuff"
 # sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 # sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
-
+cp xsettings.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 ##########################
 # Mac Keyboard mapping
 ##########################
@@ -46,10 +43,20 @@ add Control = Control_L" >> ~/.Xmodmap
 log "load Xmodmap"
 xmodmap ~/.Xmodmap
 
+# TODO: copy mac's pointers.xml to the repo as pointers.mac.xml
+# TODO: copy no-longer-virgin's pointers.xml to the repo as pointers.QEMU.xml
+# TODO: fix the cp's pwd
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
-sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+# sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+# sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+# sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+if lsusb | grep QEMU; then
+  cp pointers.QEMU.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+else
+  cp pointers.mac.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+  log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
+  sudo apt remove xserver-xorg-input-synaptics -y
+fi
 
 # select macbook pro (not sure this is necessary):
 # sudo dpkg-reconfigure keyboard-configuration
