@@ -8,6 +8,7 @@ function log {
 }
 
 SCRIPT_DIR=$(dirname $0)
+IS_VM=0
 
 F=/sys/class/power_supply/ADP1/online
 if [ -f $F ] && [[ "$(cat $F)" == "0" ]]; then
@@ -55,7 +56,7 @@ log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 if lsusb | grep QEMU; then
   cp $SCRIPT_DIR/pointers.QEMU.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
   # The next line creates a variable for future reference answering if we're running on a virtual machine
-  LVM_BOOL=1
+  IS_VM=1
 else
   cp $SCRIPT_DIR/pointers.mac.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
   log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
@@ -143,7 +144,8 @@ sudo systemctl start bluetooth.service
 sudo rfkill unblock bluetooth
 # when connecting Magic Keyboard and Trackpad remember to pair and confirm the pairing (the lock symbol should show up)
 
-sudo apt install virt-manager -y
+if [ "$IS_VM" != "1" ]
+  sudo apt install virt-manager -y
 # sudo mv xubuntu-22.04.3-desktop-amd64.iso /var/local
 
 ssh-keygen -t ed25519 -C "$(whoami)@xubuntu" -N "" -f ~/.ssh/id_ed25519
