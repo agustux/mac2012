@@ -10,6 +10,9 @@ function log {
 SCRIPT_DIR=$(dirname $0)
 IS_VM=0
 
+if lsusb | grep QEMU; then
+  IS_VM=1
+
 F=/sys/class/power_supply/ADP1/online
 if [ -f $F ] && [[ "$(cat $F)" == "0" ]]; then
   echo "Charger is not plugged in: security updates will not run without power"
@@ -53,10 +56,9 @@ log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 # sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 # sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 # sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-if lsusb | grep QEMU; then
+if [ "$IS_VM" == "1" ]; then
   cp $SCRIPT_DIR/pointers.QEMU.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
   # The next line creates a variable for future reference answering if we're running on a virtual machine
-  IS_VM=1
 else
   cp $SCRIPT_DIR/pointers.mac.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
   log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
