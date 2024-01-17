@@ -99,12 +99,13 @@ pkill sublime_text
 
 log "Configuring sublime"
 
-echo '// and are overridden in turn by syntax-specific settings.
+echo '
+// Settings in here override those in "Default/Preferences.sublime-settings",
+// and are overridden in turn by syntax-specific settings.
 {
   "open_files_in_new_window": "never",
   "tab_size": 2,
   "translate_tabs_to_spaces": true,
-// Settings in here override those in "Default/Preferences.sublime-settings",
   "trim_trailing_white_space_on_save": "all",
 }' >> ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
@@ -144,7 +145,7 @@ sudo rfkill unblock bluetooth
 
 if [ "$IS_VM" != "1" ]
   sudo apt install virt-manager -y
-# sudo mv xubuntu-22.04.3-desktop-amd64.iso /var/local
+  # sudo mv xubuntu-22.04.3-desktop-amd64.iso /var/local
 fi
 
 ssh-keygen -t ed25519 -C "$(whoami)@xubuntu" -N "" -f ~/.ssh/id_ed25519
