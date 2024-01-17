@@ -146,6 +146,7 @@ sudo rfkill unblock bluetooth
 if [ "$IS_VM" != "1" ]
   sudo apt install virt-manager -y
 # sudo mv xubuntu-22.04.3-desktop-amd64.iso /var/local
+fi
 
 ssh-keygen -t ed25519 -C "$(whoami)@xubuntu" -N "" -f ~/.ssh/id_ed25519
 log "remember to upload the following key to your github account:"
