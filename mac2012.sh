@@ -9,7 +9,8 @@ function log {
 
 SCRIPT_DIR=$(dirname $0)
 
-if [[ "$(cat /sys/class/power_supply/ADP1/online)" == "0" ]]; then
+F=/sys/class/power_supply/ADP1/online
+if [ -f $F ] && [[ "$(cat $F)" == "0" ]]; then
   echo "Charger is not plugged in: security updates will not run without power"
   exit 1
 fi
