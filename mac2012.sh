@@ -8,10 +8,9 @@ function log {
 }
 
 SCRIPT_DIR=$(dirname $0)
-lsusb | grep QEMU && IS_VM=1 || IS_VM=0
+lsusb | grep QEMU && IS_VM=true || IS_VM=false
 
-F=/sys/class/power_supply/ADP1/online
-if [ -f $F ] && [[ "$(cat $F)" == "0" ]]; then
+if ! $IS_VM && [[ "$(cat /sys/class/power_supply/ADP1/online)" == "0" ]]; then
   echo "Charger is not plugged in: security updates will not run without power"
   exit 1
 fi
@@ -21,11 +20,11 @@ log "applying security updates"
 # sudo unattended-upgrade --debug --dry-run
 sudo unattended-upgrade
 
-if sudo lshw -C network | grep description: | grep Wireless; then
+if $IS_VM; then
+  log "Skipping Wifi"
+else
   log "Wifi"
   sudo apt install bcmwl-kernel-source -y
-else
-  log "Skipping Wifi"
 fi
 
 log "fixing the theme and stuff"
@@ -52,7 +51,7 @@ log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 # sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 # sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 # sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-if [ "$IS_VM" == "1" ]; then
+if $IS_VM; then
   cp $SCRIPT_DIR/pointers.QEMU.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
   # The next line creates a variable for future reference answering if we're running on a virtual machine
 else
@@ -143,7 +142,7 @@ sudo systemctl start bluetooth.service
 sudo rfkill unblock bluetooth
 # when connecting Magic Keyboard and Trackpad remember to pair and confirm the pairing (the lock symbol should show up)
 
-if [ "$IS_VM" != "1" ]
+if ! $IS_VM; then
   sudo apt install virt-manager -y
   # sudo mv xubuntu-22.04.3-desktop-amd64.iso /var/local
 fi
