@@ -31,6 +31,7 @@ log "fixing the theme and stuff"
 # sed -i 's|^.*name="ThemeName".*$|    <property name="ThemeName" type="string" value="Adwaita-dark"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 # sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 cp $SCRIPT_DIR/xsettings.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+cp $SCRIPT_DIR/xfwm4.mac.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
 ##########################
 # Mac Keyboard mapping
 ##########################
@@ -53,6 +54,8 @@ log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 # sed -i 's|^.*name="ReverseScrolling".*$|    <property name="ReverseScrolling" type="bool" value="true"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 if lsusb | grep QEMU; then
   cp $SCRIPT_DIR/pointers.QEMU.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+  # The next line creates a variable for future reference answering if we're running on a virtual machine
+  LVM_BOOL=1
 else
   cp $SCRIPT_DIR/pointers.mac.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
   log "fixing trackpad natural scroll on apps (e.g. terminal and sublime)"
