@@ -8,10 +8,7 @@ function log {
 }
 
 SCRIPT_DIR=$(dirname $0)
-IS_VM=0
-
-if lsusb | grep QEMU; then
-  IS_VM=1
+lsusb | grep QEMU && IS_VM=1 || IS_VM=0
 
 F=/sys/class/power_supply/ADP1/online
 if [ -f $F ] && [[ "$(cat $F)" == "0" ]]; then
