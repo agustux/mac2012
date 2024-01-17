@@ -48,7 +48,6 @@ add Control = Control_L" >> ~/.Xmodmap
 log "load Xmodmap"
 xmodmap ~/.Xmodmap
 
-cp $SCRIPT_DIR/pointers.mac.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 # sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
 # sed -i 's|^.*name="libinput_Tapping_Enabled".*$|      <property name="libinput_Tapping_Enabled" type="int" value="1"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
