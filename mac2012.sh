@@ -8,7 +8,7 @@ function log {
 }
 
 SCRIPT_DIR=$(dirname $0)
-lsusb | grep QEMU && IS_VM=true || IS_VM=false
+lsusb | grep -q QEMU && IS_VM=true || IS_VM=false
 
 if ! $IS_VM && [[ "$(cat /sys/class/power_supply/ADP1/online)" == "0" ]]; then
   echo "Charger is not plugged in: security updates will not run without power"
