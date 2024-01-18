@@ -32,20 +32,23 @@ log "fixing the theme and stuff"
 # sed -i 's|^.*name="IconThemeName".*$|    <property name="IconThemeName" type="string" value="elementary-xfce-darker"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 cp $SCRIPT_DIR/xsettings.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
 cp $SCRIPT_DIR/xfwm4.mac.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
+
 ##########################
 # Mac Keyboard mapping
 ##########################
 
-log "installing xmodmap"
-sudo apt install xkeycaps -y
-xmodmap -pke > ~/.Xmodmap
-log "fixing Ctrl to Cmd for shortcuts"
-echo "! bind left command key as another Ctrl key
-remove mod4 = Super_L
-keysym Super_L = Control_L
-add Control = Control_L" >> ~/.Xmodmap
-log "load Xmodmap"
-xmodmap ~/.Xmodmap
+if [ ! -f ~/.Xmodmap ]; then
+  log "installing xmodmap"
+  sudo apt install xkeycaps -y
+  xmodmap -pke > ~/.Xmodmap
+  log "fixing Ctrl to Cmd for shortcuts"
+  echo "! bind left command key as another Ctrl key
+  remove mod4 = Super_L
+  keysym Super_L = Control_L
+  add Control = Control_L" >> ~/.Xmodmap
+  log "load Xmodmap"
+  xmodmap ~/.Xmodmap
+fi
 
 log "fixing the trackpad speed, tap-to-click, and reverse scrolling"
 # sed -i 's|^.*name="Acceleration".*$|    <property name="Acceleration" type="double" value="4.200000"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
