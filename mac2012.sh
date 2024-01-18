@@ -187,7 +187,6 @@ echo "sudo reboot"
 
 # sudo apt install supertux
 
-
 # CHANGE DISK ENCRYPTION PASSWORD
 # cat /etc/crypttab
 # sudo cryptsetup luksAddKey /dev/sda3
