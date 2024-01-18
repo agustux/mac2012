@@ -98,9 +98,10 @@ sleep 2
 log "closing sublime"
 pkill sublime_text
 
-log "Configuring sublime"
+if [ ! -f ~/.config/sublime-text/Packages/User/Preferences.sublime-settings ]; then
+  log "Configuring sublime"
 
-echo '
+  echo '
 // Settings in here override those in "Default/Preferences.sublime-settings",
 // and are overridden in turn by syntax-specific settings.
 {
@@ -110,13 +111,14 @@ echo '
   "trim_trailing_white_space_on_save": "all",
 }' >> ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
 
-echo '[
+  echo '[
   { "keys": ["ctrl+left"], "command": "move_to", "args": {"to": "bol", "extend": false} },
   { "keys": ["ctrl+right"], "command": "move_to", "args": {"to": "eol", "extend": false} },
   { "keys": ["ctrl+up"], "command": "move_to", "args": {"to": "bof", "extend": false} },
   { "keys": ["ctrl+down"], "command": "move_to", "args": {"to": "eof", "extend": false} },
   { "keys": ["ctrl+g"], "command": "find_next" },
 ]' >> ~/.config/sublime-text/Packages/User/Default.sublime-keymap
+fi
 
 #################
 # useful software
