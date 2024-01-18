@@ -72,13 +72,15 @@ sed -i 's|^.* value="cycle_reverse_windows_key".*$|      <property name="\&lt;Pr
 #   Switch window for same app Ctrl+`:
 sed -i 's|^.* value="switch_window_key".*$|      <property name="\&lt;Primary\&gt;grave" type="string" value="switch_window_key"/>|' ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
 
-log "configure terminal copy&paste shortcuts"
-# terminal
-# https://forum.xfce.org/viewtopic.php?id=12105
-# https://unix.stackexchange.com/questions/271150/how-to-set-ctrlc-to-copy-ctrlv-to-paste-and-ctrlshiftc-to-kill-process-in-x
-# subl ~/.config/xfce4/terminal/accels.scm
-echo '(gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
-(gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")' >> ~/.config/xfce4/terminal/accels.scm
+if ! grep -v '^;' ~/.config/xfce4/terminal/accels.scm | grep -q copy; then
+  log "configure terminal copy&paste shortcuts"
+  # terminal
+  # https://forum.xfce.org/viewtopic.php?id=12105
+  # https://unix.stackexchange.com/questions/271150/how-to-set-ctrlc-to-copy-ctrlv-to-paste-and-ctrlshiftc-to-kill-process-in-x
+  # subl ~/.config/xfce4/terminal/accels.scm
+  echo '(gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
+  (gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")' >> ~/.config/xfce4/terminal/accels.scm
+fi
 
 #################
 # Sublime
