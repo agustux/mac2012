@@ -79,7 +79,7 @@ if ! grep -v '^;' ~/.config/xfce4/terminal/accels.scm | grep -q copy; then
   # https://unix.stackexchange.com/questions/271150/how-to-set-ctrlc-to-copy-ctrlv-to-paste-and-ctrlshiftc-to-kill-process-in-x
   # subl ~/.config/xfce4/terminal/accels.scm
   echo '(gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
-  (gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")' >> ~/.config/xfce4/terminal/accels.scm
+(gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")' >> ~/.config/xfce4/terminal/accels.scm
 fi
 
 #################
