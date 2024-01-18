@@ -138,6 +138,7 @@ git config --global user.name "$(whoami)"
 
 log "installing chrome"
 # found the url in https://www.google.com/chrome
+rm -f $SCRIPT_DIR/google-chrome-stable_current_amd64.deb*
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i $SCRIPT_DIR/google-chrome-stable_current_amd64.deb
 
