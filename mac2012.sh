@@ -150,6 +150,11 @@ sudo systemctl start bluetooth.service
 sudo rfkill unblock bluetooth
 # when connecting Magic Keyboard and Trackpad remember to pair and confirm the pairing (the lock symbol should show up)
 
+# COMPLETE THE AUTOMATION OF CONNECTING TO THE PRINTER(TODO):
+# Brother printer IP:192.168.1.9
+# sudo apt install system-config-printer
+# https://askubuntu.com/questions/226307/how-to-install-a-brother-hl2270dw-laser-printer
+
 if ! $IS_VM; then
   sudo apt install virt-manager -y
   # sudo mv xubuntu-22.04.3-desktop-amd64.iso /var/local
