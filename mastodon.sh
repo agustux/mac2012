@@ -1,5 +1,5 @@
 # https://www.rosehosting.com/blog/how-to-install-mastodon-on-centos-7/
-
+dnf update -y
 # No match for argument: libyaml-devel
 # No match for argument: gdbm-devel
 # No match for argument: protobuf-devel
