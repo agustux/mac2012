@@ -17,7 +17,7 @@ curl -O https://imagemagick.org/archive/binaries/magick
 mv magick /usr/local/bin/
 alias identify="magick identify"
 
-dnf install git gpg gcc git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make autoconf automake libtool bison sqlite-devel libxml2-devel libxslt-devel gdbm-devel ncurses-devel glibc-headers glibc-devel libicu-devel libidn-devel protobuf-devel protobuf -y
+dnf install git gpg gcc git-core zlib zlib-devel gcc-c++ patch readline readline-devel libyaml-devel libffi-devel openssl-devel make autoconf automake libtool bison curl sqlite-devel libxml2-devel libxslt-devel gdbm-devel ncurses-devel glibc-headers glibc-devel libicu-devel libidn-devel protobuf-devel protobuf -y
 
 dnf install nodejs -y
 npm install -g corepack
