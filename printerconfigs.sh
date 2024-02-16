@@ -1,0 +1,1 @@
+sudo bash linux-brprinter-installer-2.2.3-1

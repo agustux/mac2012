@@ -165,8 +165,9 @@ sudo rfkill unblock bluetooth
 # sudo apt install system-config-printer
 wget https://download.brother.com/welcome/dlf006893/linux-brprinter-installer-2.2.3-1.gz
 gunzip linux-brprinter-installer-2.2.3-1.gz
-sudo bash linux-brprinter-installer-2.2.3-1
+cat $SCRIPT_DIR/printerconfigs.txt | ./printerconfigs.sh
 
+#sudo bash linux-brprinter-installer-2.2.3-1
 # https://askubuntu.com/questions/226307/how-to-install-a-brother-hl2270dw-laser-printer
 
 if ! $IS_VM; then
