@@ -63,8 +63,18 @@ else
   sudo apt remove xserver-xorg-input-synaptics -y
 fi
 
+if $IS_VM; then
+  log "skipping configurations for closed lid"
+else
+  log "setting configurations for closed lid"
+  cp $SCRIPT_DIR/xfce4-power-manager.xml ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+fi
+
 # select macbook pro (not sure this is necessary):
 # sudo dpkg-reconfigure keyboard-configuration
+log "setting keyboard configurations to Macbook/Macbook Pro"
+sudo apt install debconf-utils
+sudo debconf-set-selections < $SCRIPT_DIR/selections.conf
 
 log "fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key"
 # manually: open Window Manager / Keyboard tab and set
