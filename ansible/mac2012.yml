@@ -4,18 +4,24 @@
   - name: check if this is a VM
     shell: "lsusb | grep -q QEMU"
     register: found_quemu
+    tags: testing
   - name: setting is_vm
-    ansible.builtin.set_fact: is_vm="{{ (found_quemu.rc == 0)}}"
+    ansible.builtin.set_fact:
+      is_vm: "{{ found_quemu.rc == 0 }}"
+    tags: testing
   ################ FIX: ##################
   - name: unattended upgrade
     shell: "sudo unattended-upgrade"
+    tags: slow
 
   - name: wifi installation
     ansible.builtin.apt:
       name: bcmwl-kernel-source
       state: present
+    when: not is_vm
 
   - name: fixing theme and stuff
     ansible.builtin.copy:
-      src: {{ mypath | dirname }}/foo.conf
+      src: files/xsettings.xml
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+    tags: testing
