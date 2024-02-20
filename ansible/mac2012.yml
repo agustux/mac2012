@@ -1,5 +1,4 @@
-- hosts: localhost
-  connection: local
+- hosts: xulvm
   tasks:
   - name: check if this is a VM
     shell: "lsusb | grep -q QEMU"
