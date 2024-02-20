@@ -18,16 +18,4 @@
   - name: fixing theme and stuff
     ansible.builtin.copy:
       src: {{ mypath | dirname }}/foo.conf
-      dest: /etc/foo.conf
-
-  - name: Git checkout for xfwm4 and xsettings
-    ansible.builtin.git:
-      repo: 'https://github.com/agustux/mac2012/blob/a66cf421e1020616c73fae6f53a6e8def8a2f447/xfwm4.mac.xml'
-      repo: 'https://github.com/agustux/mac2012/blob/a66cf421e1020616c73fae6f53a6e8def8a2f447/xsettings.xml'
-      dest: /srv/checkout
-
-
-      https://github.com/agustux/mac2012/blob/a66cf421e1020616c73fae6f53a6e8def8a2f447/xfwm4.mac.xml
-      https://github.com/agustux/mac2012/blob/a66cf421e1020616c73fae6f53a6e8def8a2f447/xsettings.xml
-
-    copy: content="{{ your_json_feed }}" dest=/path/to/destination/file
+      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
