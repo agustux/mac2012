@@ -1,4 +1,4 @@
-- hosts: xulvm
+- hosts: localhost
   tasks:
   - name: check if this is a VM
     shell: "lsusb | grep -q QEMU"
@@ -19,8 +19,31 @@
       state: present
     when: not is_vm
 
-  - name: fixing theme and stuff
+  - name: fixing theme and stuff (1/2)
     ansible.builtin.copy:
       src: files/xsettings.xml
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
     tags: testing
+
+  - name: fixing theme and stuff (2/2)
+    ansible.builtin.copy:
+      scr: files/xfwm4.xml
+      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
+    tags: testing
+
+  - name: installing xmodmap (1/3)
+    ansible.builtin.apt:
+      name: xkeycaps
+      state: present
+  - name: installing xmodmap (2/3)
+    shell: "xmodmap -pke > ~/.Xmodmap"
+  - name: xmodmap
+    ansible.builtin.blockinfile:
+      path: ~/.Xmodmap
+      append_newline: true
+      block: |
+        ! bind left command key as another Ctrl key
+          remove mod4 = Super_L
+          keysym Super_L = Control_L
+          add Control = Control_L
+      tags: try
