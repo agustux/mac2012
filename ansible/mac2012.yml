@@ -2,11 +2,11 @@
   tasks:
   - name: check if this is a VM
     shell: "lsusb | grep -q QEMU"
-    register: found_quemu
+    register: found_qemu
     tags: testing
   - name: setting is_vm
     ansible.builtin.set_fact:
-      is_vm: "{{ found_quemu.rc == 0 }}"
+      is_vm: "{{ found_qemu.rc == 0 }}"
     tags: testing
   ################ FIX: ##################
   - name: unattended upgrade
@@ -35,11 +35,9 @@
     ansible.builtin.apt:
       name: xkeycaps
       state: present
-
   - name: installing xmodmap (1/2)
     shell: "xmodmap -pke > ~/.Xmodmap"
     tags: NOREPEAT
-
   - name: fixing Ctrl to Cmd for shortcuts
     ansible.builtin.blockinfile:
       path: ~/.Xmodmap
@@ -50,7 +48,20 @@
           keysym Super_L = Control_L
           add Control = Control_L
     tags: NOREPEAT
-
   - name: loading xmodmap
     shell: "xmodmap ~/.Xmodmap"
     tags: NOREPEAT
+
+  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling
+    ansible.builtin.copy:
+      src: files/pointers.mac.xml
+      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.mac.xml
+    tags: testing
+    when: not is_vm
+  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling
+    ansible.builtin.copy:
+      src: files/pointers.QEMU.xml
+      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.QEMU.xml
+    tags: testing
+    when: is_vm
+
