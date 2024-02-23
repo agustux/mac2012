@@ -52,13 +52,13 @@
     shell: "xmodmap ~/.Xmodmap"
     tags: NOREPEAT
 
-  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling
+  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR NON-VIRTUAL MACHINE)
     ansible.builtin.copy:
       src: files/pointers.mac.xml
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.mac.xml
     tags: testing
     when: not is_vm
-  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling
+  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(VIRTUAL MACHINE)
     ansible.builtin.copy:
       src: files/pointers.QEMU.xml
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.QEMU.xml
