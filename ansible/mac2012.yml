@@ -68,3 +68,10 @@
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
     tags: testing
     when: is_vm
+
+  - name: closed lid configurations(not for vm)
+    ansible.builtin.copy:
+      src: files/xfce4-power-manager.xml
+      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+    tags: testing
+    when: not is_vm
