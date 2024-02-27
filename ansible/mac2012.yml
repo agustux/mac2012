@@ -75,3 +75,23 @@
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
     tags: testing
     when: not is_vm
+
+  - name: setting keyboard configurations to Macbook/Macbook Pro (installing)
+    ansible.builtin.apt:
+      name: debconf-utils
+      state: present
+    tags: Keyboard
+  - name: setting keyboard configurations to Macbook/Macbook Pro (debconf 1/2)
+    ansible.builtin.debconf:
+      name: debconf-utils
+      question: keyboard-configuration/model
+      value: MacBook/MacBook Pro
+      vtype: select
+    tags: Keyboard
+  - name: setting keyboard configurations to Macbook/Macbook Pro (debconf 2/2)
+      ansible.builtin.debconf:
+        name: debconf-utils
+        question: keyboard-configuration/modelcode
+        value: macbook78
+        vtype: string
+    tags: Keyboard
