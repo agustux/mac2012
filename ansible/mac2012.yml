@@ -89,9 +89,9 @@
       vtype: select
     tags: Keyboard
   - name: setting keyboard configurations to Macbook/Macbook Pro (debconf 2/2)
-      ansible.builtin.debconf:
-        name: debconf-utils
-        question: keyboard-configuration/modelcode
-        value: macbook78
-        vtype: string
+    ansible.builtin.debconf:
+      name: debconf-utils
+      question: keyboard-configuration/modelcode
+      value: macbook78
+      vtype: string
     tags: Keyboard
