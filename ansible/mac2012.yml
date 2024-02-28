@@ -100,5 +100,6 @@
       path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard-layout.xml
       regexp: '^(.*)name="XkbModel"(.*)$'
       line: '    <property name="XkbModel" type="string" value="macbook78"/>'
+    tags: Keyboard
 
 #  ^.* value="cycle_windows_key".*$
