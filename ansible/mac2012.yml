@@ -95,3 +95,10 @@
       value: macbook78
       vtype: string
     tags: Keyboard
+  - name: setting keyboard configurations to Macbook/Macbook Pro (keyboard-layout.xml)
+    ansible.builtin.lineinfile:
+      path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard-layout.xml
+      regexp: '^(.*)name="XkbModel"(.*)$'
+      line: '    <property name="XkbModel" type="string" value="macbook78"/>'
+
+#  ^.* value="cycle_windows_key".*$
