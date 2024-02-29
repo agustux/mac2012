@@ -24,7 +24,6 @@
       src: files/xsettings.xml
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
     tags: testing
-
   - name: fixing theme and stuff (2/2)
     ansible.builtin.copy:
       src: files/xfwm4.mac.xml
@@ -56,6 +55,7 @@
     ansible.builtin.copy:
       src: files/pointers.mac.xml
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
+    when: not is_vm
   - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR NON VIRTUAL MACHINE 2/2)
     ansible.builtin.apt:
       name: xserver-xorg-input-synaptics
@@ -120,3 +120,12 @@
       regexp: '^.* value="switch_window_key".*$'
       line: '      <property name="\&lt;Primary\&gt;grave" type="string" value="switch_window_key"/>'
     tags: Cycle_shortcuts
+
+  - name: configuring terminal copy-paste shortcuts
+    ansible.builtin.blockinfile:
+      path: ~/.config/xfce4/terminal/accels.scm
+      append_newline: true
+      block: |
+        (gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
+        (gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")
+    tags: Terminal
