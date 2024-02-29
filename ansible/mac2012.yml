@@ -102,4 +102,21 @@
       line: '    <property name="XkbModel" type="string" value="macbook78"/>'
     tags: Keyboard
 
-#  ^.* value="cycle_windows_key".*$
+  - name: fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key (1/3)
+    ansible.builtin.lineinfile:
+      path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+      regexp: '^.* value="cycle_windows_key".*$'
+      line: '      <property name="\&lt;Primary\&gt;Tab" type="string" value="cycle_windows_key"/>'
+    tags: Cycle_shortcuts
+  - name: fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key (2/3)
+    ansible.builtin.lineinfile:
+      path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+      regexp: '^.* value="cycle_reverse_windows_key".*$'
+      line: '      <property name="\&lt;Primary\&gt;\&lt;Shift\&gt;ISO_Left_Tab" type="string" value="cycle_reverse_windows_key"/>'
+    tags: Cycle_shortcuts
+  - name: fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key (3/3)
+    ansible.builtin.lineinfile:
+      path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
+      regexp: '^.* value="switch_window_key".*$'
+      line: '      <property name="\&lt;Primary\&gt;grave" type="string" value="switch_window_key"/>'
+    tags: Cycle_shortcuts
