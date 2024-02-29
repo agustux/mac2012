@@ -179,3 +179,43 @@
             { "keys": ["ctrl+g"], "command": "find_next" },
           ]
     tags: NOREPEAT
+
+  - name: installing git
+    ansible.builtin.apt:
+      name: git
+      state: present
+  - name: Adding git alias for checkout (1/6)
+    community.general.git_config:
+      name: alias.co
+      scope: global
+      value: checkout
+  - name: Adding git alias for branch (2/6)
+    community.general.git_config:
+      name: alias.br
+      scope: global
+      value: branch
+  - name: Adding git alias for commit (3/6)
+    community.general.git_config:
+      name: alias.ci
+      scope: global
+      value: commit
+  - name: Adding git alias for status (4/6)
+    community.general.git_config:
+      name: alias.st
+      scope: global
+      value: status
+  - name: Adding git alias for user.email (5/6)
+    community.general.git_config:
+      name: user.email
+      scope: global
+      value: "{{ ansible_user_id }}@xubuntu"
+  - name: Adding git alias for user.name (6/6)
+    community.general.git_config:
+      name: user.name
+      scope: global
+      value: "{{ ansible_user_id }}"
+
+  - name: installing chrome
+    ansible.builtin.get_url:
+      url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      dest: ~/.config/
