@@ -152,9 +152,10 @@
     shell: 'subl'
   - name: sleeping
     ansible.builtin.pause:
-      seconds: 10
+      seconds: 5
   - name: pkilling sublime
     shell: 'pkill sublime_text'
+    tags: NOREPEAT
   - name: configuring sublime (1/2)
     ansible.builtin.blockinfile:
       path: ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
@@ -187,8 +188,7 @@
     ansible.builtin.apt:
       name: git
       state: present
-
-  - name: Adding git aliases
+  - name: adding git aliases
     community.general.git_config:
       name: "{{ item.name }}"
       scope: global
@@ -206,3 +206,23 @@
     ansible.builtin.get_url:
       url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
       dest: ~/.config/
+  - name: depackaging google-chrome-stable_current_amd64
+    ansible.builtin.dpkg_selections:
+      name: google-chrome-stable_current_amd64.deb
+      selection: install
+
+  - name: installing bluetooth
+    ansible.builtin.apt:
+      name: bluez*
+  - name: installing blueman
+    ansible.builtin.apt:
+      name: blueman
+  - name: enabling bluetooth service
+    shell: 'sudo systemctl enable bluetooth.service'
+    become: true
+  - name: start bluetooth service
+    shell: 'sudo systemctl start bluetooth.service'
+    become: true
+  - name: unblocking bluetooth
+    shell: 'sudo rfkill unblock bluetooth'
+    become: true
