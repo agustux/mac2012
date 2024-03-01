@@ -187,36 +187,20 @@
     ansible.builtin.apt:
       name: git
       state: present
-  - name: Adding git alias for checkout (1/6)
+
+  - name: Adding git aliases
     community.general.git_config:
-      name: alias.co
+      name: "{{ item.name }}"
       scope: global
-      value: checkout
-  - name: Adding git alias for branch (2/6)
-    community.general.git_config:
-      name: alias.br
-      scope: global
-      value: branch
-  - name: Adding git alias for commit (3/6)
-    community.general.git_config:
-      name: alias.ci
-      scope: global
-      value: commit
-  - name: Adding git alias for status (4/6)
-    community.general.git_config:
-      name: alias.st
-      scope: global
-      value: status
-  - name: Adding git alias for user.email (5/6)
-    community.general.git_config:
-      name: user.email
-      scope: global
-      value: "{{ ansible_user_id }}@xubuntu"
-  - name: Adding git alias for user.name (6/6)
-    community.general.git_config:
-      name: user.name
-      scope: global
-      value: "{{ ansible_user_id }}"
+      value: "{{ item.value }}"
+    loop:
+      - { name: alias.co, value: checkout}
+      - { name: alias.br, value: branch}
+      - { name: alias.ci, value: commit}
+      - { name: alias.st, value: status}
+      - { name: user.email, value: '{{ ansible_user_id }}@xubuntu'}
+      - { name: user.name, value: '{{ ansible_user_id }}'}
+    tags: Git
 
   - name: installing chrome
     ansible.builtin.get_url:
