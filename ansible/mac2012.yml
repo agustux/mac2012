@@ -138,6 +138,7 @@
       content: 'deb https://download.sublimetext.com/ apt/stable/'
       dest: /etc/apt/sources.list.d/sublime-text.list
     become: true
+
   - name: Update all packages to their latest version
     ansible.builtin.apt:
       name: "*"
