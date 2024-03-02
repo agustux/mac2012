@@ -214,9 +214,11 @@
   - name: installing bluetooth
     ansible.builtin.apt:
       name: bluez*
+      state: present
   - name: installing blueman
     ansible.builtin.apt:
       name: blueman
+      state: present
   - name: enabling bluetooth service
     shell: 'sudo systemctl enable bluetooth.service'
     become: true
@@ -226,3 +228,11 @@
   - name: unblocking bluetooth
     shell: 'sudo rfkill unblock bluetooth'
     become: true
+
+  - name: installing system-config-printer
+    ansible.builtin.apt:
+      name: system-config-printer
+      state: present
+  - name: starting the configuration setup
+    shell: "cat ~/ansible/files/printerconfigs.txt | ./files/printerconfigs.sh"
+
