@@ -236,3 +236,8 @@
   - name: starting the configuration setup
     shell: "cat ~/ansible/files/printerconfigs.txt | ./files/printerconfigs.sh"
 
+  - name: virtual machine manager installation
+    ansible.builtin.apt:
+      name: virt-manager
+      state: present
+    when: not is_vm
