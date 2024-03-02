@@ -12,6 +12,7 @@
   - name: Upgrade the OS
     ansible.builtin.apt:
       upgrade: dist
+    become: true
     tags: slow
 
   - name: wifi installation
