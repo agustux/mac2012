@@ -241,3 +241,10 @@
       name: virt-manager
       state: present
     when: not is_vm
+
+  - name: generating SSH key to add to github
+    community.crypto.openssh_keypair:
+      path: ~/.ssh/id_ed25519
+      type: ed25519
+      comment: "{{ ansible_user_id }}@xubuntu"
+    tags: ssh-keygen
