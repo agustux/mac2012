@@ -234,7 +234,7 @@
       name: system-config-printer
       state: present
   - name: starting the configuration setup
-    shell: "cat ~/ansible/files/printerconfigs.txt | ./files/printerconfigs.sh"
+    shell: "cat ~/mac2012/ansible/files/printerconfigs.txt | ./files/printerconfigs.sh"
 
   - name: virtual machine manager installation
     ansible.builtin.apt:
