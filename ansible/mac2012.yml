@@ -47,6 +47,7 @@
           remove mod4 = Super_L
           keysym Super_L = Control_L
           add Control = Control_L
+      marker: "! {mark} ANSIBLE MANAGED BLOCK"
     tags: NOREPEAT
   - name: loading xmodmap
     shell: "xmodmap ~/.Xmodmap"
