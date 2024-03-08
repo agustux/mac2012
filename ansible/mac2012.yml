@@ -203,14 +203,21 @@
       - { name: user.name, value: '{{ ansible_user_id }}'}
     tags: Git
 
-  - name: installing chrome
+  - name: downloading chrome
     ansible.builtin.get_url:
       url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-      dest: ~/.config/
-  - name: depackaging google-chrome-stable_current_amd64
-    ansible.builtin.dpkg_selections:
-      name: google-chrome-stable_current_amd64.deb
-      selection: install
+      dest: /tmp/
+    tags: chrome
+  - name: intsalling chrome
+    ansible.builtin.apt:
+      deb: /tmp/google-chrome-stable_current_amd64.deb
+    become: true
+    tags: chrome
+
+  # - name: depackaging google-chrome-stable_current_amd64
+  #   ansible.builtin.dpkg_selections:
+  #     name: google-chrome-stable_current_amd64.deb
+  #     selection: install
 
   - name: installing bluetooth
     ansible.builtin.apt:
