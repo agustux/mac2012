@@ -214,11 +214,6 @@
     become: true
     tags: chrome
 
-  # - name: depackaging google-chrome-stable_current_amd64
-  #   ansible.builtin.dpkg_selections:
-  #     name: google-chrome-stable_current_amd64.deb
-  #     selection: install
-
   - name: installing bluetooth
     ansible.builtin.apt:
       name: bluez*
