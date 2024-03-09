@@ -12,6 +12,7 @@
   - name: Upgrade the OS
     ansible.builtin.apt:
       upgrade: dist
+    become: true
     tags: slow
 
   - name: wifi installation
@@ -217,6 +218,7 @@
     ansible.builtin.file:
       path: /tmp/google-chrome-stable_current_amd64.deb
       state: absent
+    tags: chrome
 
   - name: installing bluetooth
     ansible.builtin.apt:
