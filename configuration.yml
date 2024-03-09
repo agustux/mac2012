@@ -11,7 +11,7 @@
 
   - name: fixing theme and stuff (1/2)
     ansible.builtin.copy:
-      src: files/xsettings.xml
+      src: "{{ playbook_dir }}/files/xsettings.xml"
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
     tags: testing
   - name: fixing theme and stuff (2/2)
@@ -40,7 +40,7 @@
 
   - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR NON VIRTUAL MACHINE 1/2)
     ansible.builtin.copy:
-      src: files/pointers.mac.xml
+      src: "{{ playbook_dir }}/files/pointers.mac.xml"
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
     when: not is_vm
   - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR NON VIRTUAL MACHINE 2/2)
@@ -51,14 +51,14 @@
     when: not is_vm
   - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(localhost)
     ansible.builtin.copy:
-      src: files/pointers.QEMU.xml
+      src: "{{ playbook_dir }}/files/pointers.QEMU.xml"
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
     tags: testing
     when: is_vm
 
   - name: closed lid configurations(not for vm)
     ansible.builtin.copy:
-      src: files/xfce4-power-manager.xml
+      src: "{{ playbook_dir }}/files/xfce4-power-manager.xml"
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
     tags: testing
     when: not is_vm
@@ -173,4 +173,4 @@
     become: true
 
   - name: starting the configuration setup
-    shell: "cat ~/mac2012/ansible/files/printerconfigs.txt | ./files/printerconfigs.sh"
+    shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
