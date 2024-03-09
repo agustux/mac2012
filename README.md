@@ -9,7 +9,7 @@ python3 -m venv ansible_venv
 ./ansible_venv/bin/ansible-galaxy collection install ansible.posix
 ./ansible_venv/bin/ansible-galaxy collection install community.general
 ./ansible_venv/bin/ansible-galaxy collection install community.crypto
-curl -LO https://github.com/agustux/mac2012/archive/refs/tags/v0.0.1.tar.gz
+curl -LO https://github.com/agustux/mac2012/archive/refs/tags/v1.0.0a.tar.gz
 tar -xvf $HOME/v0.0.1.tar.gz -C ~/ansible
 ANSIBLE_CONFIG=ansible/ansible.cfg ./ansible_venv/bin/ansible-playbook ansible/installation.yml
 ANSIBLE_CONFIG=ansible/ansible.cfg ./ansible_venv/bin/ansible-playbook ansible/configuration.yml
