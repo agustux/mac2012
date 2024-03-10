@@ -12,8 +12,8 @@ python3 -m venv ansible_venv
 mkdir ansible
 curl -LO https://github.com/agustux/mac2012/archive/refs/tags/v1.0.0a.tar.gz
 tar -xvf $HOME/v1.0.0a.tar.gz -C ~
-ANSIBLE_CONFIG=ansible/ansible.cfg ./ansible_venv/bin/ansible-playbook ansible/installation.yml
-ANSIBLE_CONFIG=ansible/ansible.cfg ./ansible_venv/bin/ansible-playbook ansible/configuration.yml
+ANSIBLE_CONFIG=mac2012-1.0.0a/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.0.0a/installation.yml
+ANSIBLE_CONFIG=mac2012-1.0.0a/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.0.0a/configuration.yml
 echo "remember to upload the following key to your github account:"
 cat ~/.ssh/id_ed25519.pub
 echo "to apply these changes run:"

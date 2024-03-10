@@ -20,17 +20,20 @@
     ansible.builtin.apt:
       name: bcmwl-kernel-source
       state: present
+    become: true
     when: not is_vm
 
   - name: installing xmodmap (1/2)
     ansible.builtin.apt:
       name: xkeycaps
       state: present
+    become: true
 
   - name: setting keyboard configurations to Macbook/Macbook Pro (installing)
     ansible.builtin.apt:
       name: debconf-utils
       state: present
+    become: true
     tags: Keyboard
 
   - name: installing sublime-text (1/2)
@@ -51,11 +54,13 @@
     ansible.builtin.apt:
       name: sublime-text
       state: present
+    become: true
 
   - name: installing git
     ansible.builtin.apt:
       name: git
       state: present
+    become: true
 
   - name: downloading chrome
     ansible.builtin.get_url:
@@ -71,16 +76,19 @@
     ansible.builtin.file:
       path: /tmp/google-chrome-stable_current_amd64.deb
       state: absent
+    become: true
     tags: chrome
 
   - name: installing bluetooth
     ansible.builtin.apt:
       name: bluez*
       state: present
+    become: true
   - name: installing blueman
     ansible.builtin.apt:
       name: blueman
       state: present
+    become: true
 
   - name: installing system-config-printer
     ansible.builtin.apt:
@@ -92,6 +100,7 @@
     ansible.builtin.apt:
       name: virt-manager
       state: present
+    become: true
     when: not is_vm
 
   - name: generating SSH key to add to github
