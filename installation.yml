@@ -43,7 +43,7 @@
       content: 'deb https://download.sublimetext.com/ apt/stable/'
       dest: /etc/apt/sources.list.d/sublime-text.list
     become: true
-  - name: Upgrade all apt packages
+  - name: Update all packages to their latest version
     ansible.builtin.apt:
       name: "*"
       state: latest
@@ -51,10 +51,11 @@
     become: true
     tags: UP
   - name: installing sublime-text (2/2)
-    ansible.builtin.apt:
-      name: sublime-text
-      state: present
-    become: true
+    shell: "sudo apt-get install sublime-text"
+    # ansible.builtin.apt:
+    #   name: sublime-text
+    #   state: present
+    # become: true
 
   - name: installing git
     ansible.builtin.apt:
