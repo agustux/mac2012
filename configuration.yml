@@ -39,8 +39,9 @@
 
   - name: copying configured file into ~/.config
     ansible.builtin.copy:
-      src: mac2012-0.0.5/files/keyboard-layout.xml
+      src: "{{ playbook_dir }}/files/keyboard-layout.xml"
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard-layout.xml
+      remote_src: yes
     tags: keyboard-layout.xml
 
   - name: installing xmodmap (1/2)
@@ -174,5 +175,6 @@
     shell: 'sudo rfkill unblock bluetooth'
     become: true
 
-  - name: starting the configuration setup
+  - name: starting the configuration setup for printer
     shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
+    when: not is_vm
