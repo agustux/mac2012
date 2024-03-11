@@ -36,12 +36,12 @@
       vtype: string
     become: true
     tags: Keyboard
-  - name: setting keyboard configurations to Macbook/Macbook Pro (keyboard-layout.xml)
-    ansible.builtin.lineinfile:
-      path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard-layout.xml
-      regexp: '^(.*)name="XkbModel"(.*)$'
-      line: '    <property name="XkbModel" type="string" value="macbook78"/>'
-    tags: Keyboard
+
+  - name: copying configured file into ~/.config
+    ansible.builtin.copy:
+      src: mac2012-0.0.5/files/keyboard-layout.xml
+      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard-layout.xml
+    tags: keyboard-layout.xml
 
   - name: installing xmodmap (1/2)
     shell: "xmodmap -pke > ~/.Xmodmap"
