@@ -157,3 +157,18 @@
   - name: starting the configuration setup for printer
     shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
     when: not is_vm
+
+  - name: creating .ssh directory
+    ansible.builtin.file:
+      path: ~/.ssh
+      state: directory
+      mode: '700'
+    tags: ssh-keygen
+
+  - name: generating SSH key to add to github
+    community.crypto.openssh_keypair:
+      path: ~/.ssh/id_ed25519
+      type: ed25519
+      comment: "{{ ansible_user_id }}@xubuntu"
+    tags: ssh-keygen
+
