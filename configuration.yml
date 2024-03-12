@@ -123,32 +123,11 @@
   - name: pkilling sublime
     shell: 'pkill sublime_text'
     tags: NOREPEAT
-  - name: configuring sublime (1/2)
-    ansible.builtin.blockinfile:
-      path: ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
-      append_newline: true
-      block: |
-        // Settings in here override those in "Default/Preferences.sublime-settings",
-        // and are overridden in turn by syntax-specific settings.
-        {
-          "open_files_in_new_window": "never",
-          "tab_size": 2,
-          "translate_tabs_to_spaces": true,
-          "trim_trailing_white_space_on_save": "all",
-        }
-    tags: NOREPEAT
   - name: configuring sublime (2/2)
-    ansible.builtin.blockinfile:
-      path: ~/.config/sublime-text/Packages/User/Default.sublime-keymap
-      append_newline: true
-      block: |
-        [
-          { "keys": ["ctrl+left"], "command": "move_to", "args": {"to": "bol", "extend": false} },
-          { "keys": ["ctrl+right"], "command": "move_to", "args": {"to": "eol", "extend": false} },
-          { "keys": ["ctrl+up"], "command": "move_to", "args": {"to": "bof", "extend": false} },
-          { "keys": ["ctrl+down"], "command": "move_to", "args": {"to": "eof", "extend": false} },
-          { "keys": ["ctrl+g"], "command": "find_next" },
-        ]
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/Preferences.sublime-settings"
+      dest: ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
+      remote_src: yes
     tags: NOREPEAT
 
   - name: adding git aliases
