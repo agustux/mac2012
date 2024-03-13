@@ -1,5 +1,6 @@
 # bootstrap
 Before you run, make sure the printer is turned on
+
 Copy and paste these commands into the terminal:
 ```
 sudo apt-get update
