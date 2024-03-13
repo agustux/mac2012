@@ -2,6 +2,7 @@
   tasks:
   - name: check if this is a VM
     shell: "lsusb | grep -q QEMU"
+    ignore_errors: true
     register: found_qemu
     tags: testing
   - name: setting is_vm
