@@ -2,7 +2,7 @@
 Run these commands:
 ```
 sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get upgrade -y
 sudo apt install python3.10-venv -y
 sudo apt install curl -y
 python3 -m venv ansible_venv
