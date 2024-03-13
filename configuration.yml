@@ -113,7 +113,7 @@
       block: |
         (gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
         (gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")
-      marker: "! {mark} ANSIBLE MANAGED BLOCK"
+      marker: "; {mark} ANSIBLE MANAGED BLOCK"
     tags: NOREPEAT
 
   - name: opening sublime to create configuration files
