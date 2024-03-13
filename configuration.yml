@@ -72,6 +72,7 @@
     ansible.builtin.apt:
       name: xserver-xorg-input-synaptics
       state: absent
+    become: true
     tags: testing
     when: not is_vm
   - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(localhost)
