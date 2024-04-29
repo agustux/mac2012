@@ -1,7 +1,7 @@
 - hosts: localhost
   tasks:
   - name: check if this is a VM
-    shell: "lsusb | grep -q QEMU"
+    shell: "lsusb | grep QEMU"
     ignore_errors: true
     register: found_qemu
     tags: is_vm
