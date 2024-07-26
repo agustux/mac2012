@@ -5,7 +5,7 @@ Copy and paste these commands into the terminal:
 ```
 sudo apt-get update
 sudo apt-get upgrade -y
-sudo apt install python3.10-venv -y
+sudo apt install python3.11-venv -y
 sudo apt install curl -y
 python3 -m venv ansible_venv
 ./ansible_venv/bin/python3 -m pip install --upgrade pip
