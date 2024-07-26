@@ -47,7 +47,9 @@
 
   - name: configuring xmodmap
     ansible.builtin.shell: "xmodmap -pke > ~/.Xmodmap"
-    tags: NOREPEAT
+    tags:
+    - NOREPEAT
+    - xmodmap
   - name: fixing Ctrl to Cmd for shortcuts
     ansible.builtin.blockinfile:
       path: ~/.Xmodmap
@@ -58,10 +60,14 @@
           keysym Super_L = Control_L
           add Control = Control_L
       marker: "! {mark} ANSIBLE MANAGED BLOCK"
-    tags: NOREPEAT
-  - name: loading xmodmap
+    tags:
+    - NOREPEAT
+    - xmodmap
+   - name: loading xmodmap
     ansible.builtin.shell: "xmodmap ~/.Xmodmap"
-    tags: NOREPEAT
+    tags:
+    - NOREPEAT
+    - xmodmap
 
   - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR NON VIRTUAL MACHINE 1/2)
     ansible.builtin.copy:
