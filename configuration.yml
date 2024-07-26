@@ -1,7 +1,7 @@
 - hosts: localhost
   tasks:
   - name: check if this is a VM
-    shell: "lsusb | grep -q QEMU"
+    ansible.builtin.shell: "lsusb | grep -q QEMU"
     ignore_errors: true
     register: found_qemu
     tags: is_vm
@@ -45,8 +45,8 @@
       remote_src: yes
     tags: keyboard-layout.xml
 
-  - name: installing xmodmap (1/2)
-    shell: "xmodmap -pke > ~/.Xmodmap"
+  - name: configuring xmodmap
+    ansible.builtin.shell: "xmodmap -pke > ~/.Xmodmap"
     tags: NOREPEAT
   - name: fixing Ctrl to Cmd for shortcuts
     ansible.builtin.blockinfile:
@@ -60,7 +60,7 @@
       marker: "! {mark} ANSIBLE MANAGED BLOCK"
     tags: NOREPEAT
   - name: loading xmodmap
-    shell: "xmodmap ~/.Xmodmap"
+    ansible.builtin.shell: "xmodmap ~/.Xmodmap"
     tags: NOREPEAT
 
   - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR NON VIRTUAL MACHINE 1/2)
@@ -76,7 +76,7 @@
     become: true
     tags: reverse-scrolling
     when: not is_vm
-  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(localhost)
+  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR VIRTUAL MACHINE)
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/pointers.QEMU.xml"
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
@@ -117,22 +117,30 @@
         (gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
         (gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")
       marker: "; {mark} ANSIBLE MANAGED BLOCK"
-    tags: NOREPEAT
+    tags:
+    - terminal
+    - NOREPEAT
 
   - name: opening sublime to create configuration files
-    shell: 'subl'
+    ansible.builtin.shell: 'subl'
+    tags: sublime
   - name: sleeping
     ansible.builtin.pause:
       seconds: 5
+    tags: sublime
   - name: pkilling sublime
-    shell: 'pkill sublime_text'
-    tags: NOREPEAT
+    ansible.builtin.shell: 'pkill sublime_text'
+    tags:
+    - NOREPEAT
+    - sublime
   - name: configuring sublime (2/2)
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/Preferences.sublime-settings"
       dest: ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
-      remote_src: yes
-    tags: NOREPEAT
+      remote_src: true
+    tags:
+    - NOREPEAT
+    - sublime
 
   - name: adding git aliases
     community.general.git_config:
@@ -144,22 +152,33 @@
       - { name: alias.br, value: branch}
       - { name: alias.ci, value: commit}
       - { name: alias.st, value: status}
-      - { name: user.email, value: '{{ ansible_user_id }}@xubuntu'}
+      - { name: user.email, value: '{{ ansible_user_id }}@ubuntu'}
       - { name: user.name, value: '{{ ansible_user_id }}'}
     tags: git
 
-  - name: enabling bluetooth service
-    shell: 'sudo systemctl enable bluetooth.service'
-    become: true
-  - name: start bluetooth service
-    shell: 'sudo systemctl start bluetooth.service'
-    become: true
+  # - name: enabling bluetooth service
+  #   ansible.builtin.shell: 'sudo systemctl enable bluetooth.service'
+  #   become: true
+  #   tags: bluetooth
+
+  # - name: start bluetooth service
+  #   ansible.builtin.shell: 'sudo systemctl start bluetooth.service'
+  #   become: true
+  #   tags: bluetooth
+
+  - name: enabling and starting bluetooth service
+    ansible.builtin.systemd_service:
+      name: bluetooth.service
+      enabled: true
+      state: started
+    tags: bluetooth
   - name: unblocking bluetooth
-    shell: 'sudo rfkill unblock bluetooth'
+    ansible.builtin.shell: 'sudo rfkill unblock bluetooth'
     become: true
+    tags: bluetooth
 
   - name: starting the configuration setup for printer
-    shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
+    ansible.builtin.shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
     when: not is_vm
 
   - name: creating .ssh directory
@@ -168,11 +187,9 @@
       state: directory
       mode: '700'
     tags: ssh-keygen
-
   - name: generating SSH key to add to github
     community.crypto.openssh_keypair:
       path: ~/.ssh/id_ed25519
       type: ed25519
       comment: "{{ ansible_user_id }}@xubuntu"
     tags: ssh-keygen
-
