@@ -45,7 +45,7 @@
       remote_src: yes
     tags: keyboard-layout.xml
 
-  - name: installing xmodmap (1/2)
+  - name: configuring xmodmap
     shell: "xmodmap -pke > ~/.Xmodmap"
     tags: NOREPEAT
   - name: fixing Ctrl to Cmd for shortcuts
@@ -76,7 +76,7 @@
     become: true
     tags: reverse-scrolling
     when: not is_vm
-  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(localhost)
+  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR VIRTUAL MACHINE)
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/pointers.QEMU.xml"
       dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
