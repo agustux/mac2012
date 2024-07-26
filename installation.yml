@@ -43,7 +43,10 @@
     become: true
     tags: sublime
   - name: installing sublime-text (2/2)
-    ansible.builtin.shell: "sudo apt-get install sublime-text"
+    ansible.builtin.apt:
+      name: sublime-text
+      state: present
+    become: true
     tags: sublime
 
   - name: installing git
