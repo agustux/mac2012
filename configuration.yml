@@ -63,7 +63,7 @@
     tags:
     - NOREPEAT
     - xmodmap
-   - name: loading xmodmap
+  - name: loading xmodmap
     ansible.builtin.shell: "xmodmap ~/.Xmodmap"
     tags:
     - NOREPEAT
