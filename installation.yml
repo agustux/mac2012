@@ -47,6 +47,7 @@
     ansible.builtin.apt:
       name: sublime-text
       state: present
+      update_cache: true
     become: true
     tags: sublime
 

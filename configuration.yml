@@ -178,6 +178,7 @@
       enabled: true
       state: started
     tags: bluetooth
+    become: true
   - name: unblocking bluetooth
     ansible.builtin.shell: 'sudo rfkill unblock bluetooth'
     become: true
