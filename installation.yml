@@ -91,6 +91,13 @@
     become: true
     tags: brave
 
+  - name: installing gnome-tweaks
+    ansible.builtin.apt:
+      name: gnome-tweaks
+      state: present
+    become: true
+    tags: theme
+
   - name: installing bluetooth
     ansible.builtin.apt:
       name: bluez*
@@ -112,7 +119,7 @@
     when: not is_vm
     tags: printer
 
-  - name: virtual machine manager installation
+  - name: installing virtual machine manager
     ansible.builtin.apt:
       name: virt-manager
       state: present
