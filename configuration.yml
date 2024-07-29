@@ -10,15 +10,11 @@
       is_vm: "{{ found_qemu.rc == 0 }}"
     tags: is_vm
 
-  - name: fixing theme and stuff (1/2)
-    ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/xsettings.xml"
-      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+  - name: fixing gtk-theme
+    ansible.builtin.shell: gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
     tags: theme
-  - name: fixing theme and stuff (2/2)
-    ansible.builtin.copy:
-      src: files/xfwm4.mac.xml
-      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfwm4.xml
+  - name: fixing theme default
+    ansible.builtin.shell: gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
     tags: theme
 
   - name: setting keyboard configurations to Macbook/Macbook Pro (debconf 1/2)
@@ -37,13 +33,6 @@
       vtype: string
     become: true
     tags: keyboard
-
-  - name: copying configured file into ~/.config
-    ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/keyboard-layout.xml"
-      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/keyboard-layout.xml
-      remote_src: yes
-    tags: keyboard-layout.xml
 
   - name: configuring xmodmap
     ansible.builtin.shell: "xmodmap -pke > ~/.Xmodmap"
@@ -69,63 +58,24 @@
     - NOREPEAT
     - xmodmap
 
-  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR NON VIRTUAL MACHINE 1/2)
-    ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/pointers.mac.xml"
-      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-    tags: reverse-scrolling
-    when: not is_vm
-  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR NON VIRTUAL MACHINE 2/2)
-    ansible.builtin.apt:
-      name: xserver-xorg-input-synaptics
-      state: absent
-    become: true
-    tags: reverse-scrolling
-    when: not is_vm
-  - name: fixing the trackpad speed, tap-to-click, and reverse scrolling(FOR VIRTUAL MACHINE)
-    ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/pointers.QEMU.xml"
-      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/pointers.xml
-    tags: reverse-scrolling
-    when: is_vm
+  - name: loading dconf settings file
+    ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/dconf-settings.ini"
+    tags: dconf
 
-  - name: closed lid configurations(not for vm)
-    ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/xfce4-power-manager.xml"
-      dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
-    tags: lid
-    when: not is_vm
+  - name: fixing trackpad tap-to-click
+    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+    tags: reverse-scrolling
+  - name: fixing trackpad reverse scrolling
+    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
+    tags: reverse-scrolling
 
-  - name: fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key (1/3)
-    ansible.builtin.lineinfile:
-      path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
-      regexp: '^.* value="cycle_windows_key".*$'
-      line: '      <property name="&lt;Primary&gt;Tab" type="string" value="cycle_windows_key"/>'
-    tags: cycle_shortcuts
-  - name: fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key (2/3)
-    ansible.builtin.lineinfile:
-      path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
-      regexp: '^.* value="cycle_reverse_windows_key".*$'
-      line: '      <property name="&lt;Primary&gt;&lt;Shift&gt;ISO_Left_Tab" type="string" value="cycle_reverse_windows_key"/>'
-    tags: cycle_shortcuts
-  - name: fixing cycle_windows_key, cycle_reverse_windows_key, and switch_window_key (3/3)
-    ansible.builtin.lineinfile:
-      path: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-keyboard-shortcuts.xml
-      regexp: '^.* value="switch_window_key".*$'
-      line: '      <property name="&lt;Primary&gt;grave" type="string" value="switch_window_key"/>'
-    tags: cycle_shortcuts
-
-  - name: configuring terminal copy-paste shortcuts
-    ansible.builtin.blockinfile:
-      path: ~/.config/xfce4/terminal/accels.scm
-      append_newline: true
-      block: |
-        (gtk_accel_path "<Actions>/terminal-window/copy" "<Primary>c")
-        (gtk_accel_path "<Actions>/terminal-window/paste" "<Primary>v")
-      marker: "; {mark} ANSIBLE MANAGED BLOCK"
-    tags:
-    - terminal
-    - NOREPEAT
+# todo when actually installed on laptop
+  # - name: closed lid configurations(not for vm)
+  #   ansible.builtin.copy:
+  #     src: "{{ playbook_dir }}/files/xfce4-power-manager.xml"
+  #     dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
+  #   tags: lid
+  #   when: not is_vm
 
   - name: opening sublime to create configuration files
     ansible.builtin.shell: 'subl'
@@ -162,31 +112,17 @@
       - { name: user.name, value: '{{ ansible_user_id }}'}
     tags: git
 
-  # - name: enabling bluetooth service
-  #   ansible.builtin.shell: 'sudo systemctl enable bluetooth.service'
-  #   become: true
-  #   tags: bluetooth
-
-  # - name: start bluetooth service
-  #   ansible.builtin.shell: 'sudo systemctl start bluetooth.service'
-  #   become: true
-  #   tags: bluetooth
-
   - name: enabling and starting bluetooth service
     ansible.builtin.systemd_service:
       name: bluetooth.service
       enabled: true
       state: started
-    tags: bluetooth
     become: true
+    tags: bluetooth
   - name: unblocking bluetooth
     ansible.builtin.shell: 'sudo rfkill unblock bluetooth'
     become: true
     tags: bluetooth
-
-  - name: starting the configuration setup for printer
-    ansible.builtin.shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
-    when: not is_vm
 
   - name: creating .ssh directory
     ansible.builtin.file:
@@ -198,5 +134,16 @@
     community.crypto.openssh_keypair:
       path: ~/.ssh/id_ed25519
       type: ed25519
-      comment: "{{ ansible_user_id }}@xubuntu"
+      comment: "{{ ansible_user_id }}@ubuntu"
     tags: ssh-keygen
+
+  - name: starting the configuration setup for printer
+    ansible.builtin.shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
+    when: not is_vm
+
+  - name: cleaning up tar archive
+    ansible.builtin.file:
+      path: "{{ item }}"
+      state: absent
+    with_fileglob:
+      - "~/v*.tar.gz"
