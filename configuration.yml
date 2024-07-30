@@ -39,7 +39,7 @@
     tags:
     - NOREPEAT
     - xmodmap
-  - name: fixing Ctrl to Cmd for shortcuts
+  - name: remapping super to ctrl for shortcuts
     ansible.builtin.blockinfile:
       path: ~/.Xmodmap
       append_newline: true
@@ -69,14 +69,6 @@
     ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
     tags: reverse-scrolling
 
-# todo when actually installed on laptop
-  # - name: closed lid configurations(not for vm)
-  #   ansible.builtin.copy:
-  #     src: "{{ playbook_dir }}/files/xfce4-power-manager.xml"
-  #     dest: ~/.config/xfce4/xfconf/xfce-perchannel-xml/xfce4-power-manager.xml
-  #   tags: lid
-  #   when: not is_vm
-
   - name: opening sublime to create configuration files
     ansible.builtin.shell: 'subl'
     tags: sublime
@@ -89,7 +81,7 @@
     tags:
     - NOREPEAT
     - sublime
-  - name: configuring sublime (2/2)
+  - name: configuring sublime
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/Preferences.sublime-settings"
       dest: ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
