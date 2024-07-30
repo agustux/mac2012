@@ -68,6 +68,12 @@
   - name: fixing trackpad reverse scrolling
     ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
     tags: reverse-scrolling
+  - name: setting two-finger-scrolling
+    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
+    tags: reverse-scrolling
+  - name: disabling touchpad while typing
+    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
+    tags: reverse-scrolling
 
   - name: opening sublime to create configuration files
     ansible.builtin.shell: 'subl'
