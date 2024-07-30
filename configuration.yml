@@ -59,7 +59,7 @@
     - xmodmap
 
   - name: loading dconf settings file
-    ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/file/dconf-settings.ini"
+    ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/files/dconf-settings.ini"
     tags: dconf
 
   - name: fixing trackpad tap-to-click
