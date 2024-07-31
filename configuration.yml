@@ -78,12 +78,18 @@
     ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad click-method fingers
     tags: touchpad
 
+  - name: creating .config/autostart directory for camera patch
+    ansible.builtin.file:
+      path: ~/.config/autostart
+      state: directory
+      mode: '700'
+    tags: autostart
   - name: copying snapshot patch to autostart processes
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/systemctl.desktop"
       dest: ~/.config/autostart/systemctl.desktop
       mode: '664'
-      directory_mode: '700'
+    tags: autostart
 
   - name: opening sublime to create configuration files
     ansible.builtin.shell: 'subl'
