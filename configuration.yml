@@ -64,16 +64,26 @@
 
   - name: fixing trackpad tap-to-click
     ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-    tags: reverse-scrolling
+    tags: touchpad
   - name: fixing trackpad reverse scrolling
     ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
-    tags: reverse-scrolling
+    tags: touchpad
   - name: setting two-finger-scrolling
     ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
-    tags: reverse-scrolling
+    tags: touchpad
   - name: disabling touchpad while typing
     ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
-    tags: reverse-scrolling
+    tags: touchpad
+  - name: secondary click with two-fingers
+    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad click-method fingers
+    tags: touchpad
+
+  - name: copying snapshot patch to autostart processes
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/systemctl.desktop"
+      dest: ~/.config/autostart/systemctl.desktop
+      mode: '664'
+      directory_mode: '700'
 
   - name: opening sublime to create configuration files
     ansible.builtin.shell: 'subl'

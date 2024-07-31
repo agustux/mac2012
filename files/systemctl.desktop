@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=systemctl --user restart pipewire
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_US]=Snapshot App Fix
+Name=Camera app fix
+Comment[en_US]=GNOME Snapshot App fix
+Comment=GNOME Snapshot app fix
