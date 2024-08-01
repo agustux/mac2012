@@ -1,0 +1,5 @@
+[Unit]
+Description=RSS Notifier Service
+
+[Service]
+ExecStart=/opt/rss-notifier.sh

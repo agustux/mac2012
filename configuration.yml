@@ -138,6 +138,38 @@
     become: true
     tags: bluetooth
 
+  - name: copying rss notifier service
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/rss-notifier.service"
+      dest: /etc/systemd/system/
+      mode: '777'
+    when: rss is defined
+    tags: rss
+  - name: copying rss notifier timer
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/rss-notifier.timer"
+      dest: /etc/systemd/system/
+      mode: '777'
+    when: rss is defined
+    tags: rss
+  - name: copying rss notifier script
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/rss-notifier.sh"
+      dest: /opt/
+      mode: '777'
+    when: rss is defined
+    tags: rss
+
+    # add lineinefile module to include the variable rss in the opt script
+    # run systemd timer to notify our user
+  - name: enabling and starting rss-notifier service
+    ansible.builtin.systemd_service:
+      name: rss-notifier.timer
+      enabled: true
+      state: started
+    become: true
+    tags: rss
+
   - name: creating .ssh directory
     ansible.builtin.file:
       path: ~/.ssh
