@@ -1,9 +1,0 @@
-[Unit]
-Description=RSS Notifier Timer
-
-[Timer]
-OnCalendar=*-*-* *:*:0
-Persistent=true
-
-[Install]
-WantedBy=timers.target
