@@ -140,7 +140,7 @@
 
   - name: copying script for rss-notify
     ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/rss-notify.sh"
+      src: "{{ playbook_dir }}/files/rss-notifier.sh"
       dest: /opt/
       remote_src: true
     when: rss is defined
@@ -156,7 +156,7 @@
   - name: making cron for querying rss xml and notifying
     ansible.builtin.cron:
       user: gus
-      job: "if ! /opt/rss-notify.sh; then XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send -u critical Guschat \"New Message\"; fi"
+      job: "if ! /opt/rss-notifier.sh; then XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send -u critical Guschat \"New Message\"; fi"
     when: rss is defined
     tags: rss
 
