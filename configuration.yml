@@ -148,7 +148,7 @@
     tags: rss
   - name: append rss variable to curl in script
     ansible.builtin.lineinfile:
-      path: /opt/rss-notify.sh
+      path: /opt/rss-notifier.sh
       backrefs: yes
       regexp: "^(.*/tmp/rss-output-source.txt.*)$"
       line: " {{ rss }}"
