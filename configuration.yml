@@ -138,6 +138,28 @@
     become: true
     tags: bluetooth
 
+  - name: copying script for rss-notify
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/rss-notify.sh"
+      dest: /opt/
+      remote_src: true
+    when: rss is defined
+    tags: rss
+  - name: append rss variable to curl in script
+    ansible.builtin.lineinfile:
+      path: /opt/rss-notify.sh
+      backrefs: yes
+      regexp: "^(.*/tmp/rss-output-source.txt.*)$"
+      line: " {{ rss }}"
+    when: rss is defined
+    tags: rss
+  - name: making cron for querying rss xml and notifying
+    ansible.builtin.cron:
+      user: gus
+      job: "if ! /opt/rss-notify.sh; then XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send -u critical Guschat \"New Message\"; fi"
+    when: rss is defined
+    tags: rss
+
   - name: creating .ssh directory
     ansible.builtin.file:
       path: ~/.ssh
