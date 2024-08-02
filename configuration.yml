@@ -143,6 +143,7 @@
       src: "{{ playbook_dir }}/files/rss-notifier.sh"
       dest: /opt/
       remote_src: true
+    become: true
     when: rss is defined
     tags: rss
   - name: append rss variable to curl in script
@@ -151,6 +152,7 @@
       backrefs: yes
       regexp: "^(.*/tmp/rss-output-source.txt.*)$"
       line: " {{ rss }}"
+    become: true
     when: rss is defined
     tags: rss
   - name: making cron for querying rss xml and notifying
