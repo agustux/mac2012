@@ -138,20 +138,11 @@
     become: true
     tags: bluetooth
 
-  - name: copying script for rss-notify
-    ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/rss-notifier.sh"
-      dest: /opt/
-      remote_src: true
-    become: true
-    when: rss is defined
-    tags: rss
-  - name: append rss variable to curl in script
-    ansible.builtin.lineinfile:
-      path: /opt/rss-notifier.sh
-      regexp: '(curl.*)'
-      line: '\1 {{ rss }}'
-    become: true
+
+  - name: rss script template
+    ansible.builtin.template:
+      src: "{{ playbook_dir }}/files/rss-notifier.sh.j2"
+      dest: /opt/rss-notifier.sh
     when: rss is defined
     tags: rss
   - name: making cron for querying rss xml and notifying
