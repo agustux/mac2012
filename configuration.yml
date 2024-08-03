@@ -138,33 +138,11 @@
     become: true
     tags: bluetooth
 
-
-  - name: rss script template
-    ansible.builtin.template:
-      src: "{{ playbook_dir }}/files/rss-notifier.sh.j2"
-      dest: /opt/rss-notifier.sh
-    become: true
+  - name: rss-notifier tasks
+    ansible.builtin.include_tasks: "rss-notifier.yml"
     when:
       - rss is defined
-      - rss-user is defined
-    tags: rss
-  - name: chmod +x /opt/rss-notifier.sh
-    ansible.builtin.file:
-      path: /opt/rss-notifier.sh
-      mode: u=rwx,g=rx,o=rx
-    become: true
-    when:
-      - rss is defined
-      - rss-user is defined
-    tags: rss
-  - name: making cron for querying rss xml and notifying
-    ansible.builtin.cron:
-      name: rss notifier
-      user: gus
-      job: "/opt/rss-notifier.sh"
-    when:
-      - rss is defined
-      - rss-user is defined
+      - rss_user is defined
     tags: rss
 
   - name: creating .ssh directory

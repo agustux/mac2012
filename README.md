@@ -1,5 +1,6 @@
 # Bootstrap
-Before you run, make sure the printer is turned on
+Use https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#passing-variables-on-the-command-line for reference passing the extra-vars for configuration.yml
+
 
 Copy and paste these commands into the terminal:
 ```
