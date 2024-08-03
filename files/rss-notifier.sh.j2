@@ -1,7 +1,7 @@
 #!/bin/bash
 
 curl -o /tmp/rss-output-new.xml {{ rss }}
-if diff /tmp/rss-output-new.xml /tmp/rss-output-old.xml; then
+if ! diff /tmp/rss-output-new.xml /tmp/rss-output-old.xml; then
   export XDG_RUNTIME_DIR=/run/user/$(id -u)
   notify-send -u critical Guschat "New Message"
 fi
