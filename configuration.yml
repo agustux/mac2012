@@ -150,7 +150,7 @@
     ansible.builtin.cron:
       name: rss notifier
       user: gus
-      job: "if $(/opt/rss-notifier.sh) -eq 1; then XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send -u critical Guschat \"New Message\"; fi"
+      job: "/bin/bash if $(/opt/rss-notifier.sh) -eq 1; then XDG_RUNTIME_DIR=/run/user/$(id -u) notify-send -u critical Guschat \"New Message\"; else exit 0; fi"
     when: rss is defined
     tags: rss
 
