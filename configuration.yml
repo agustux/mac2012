@@ -142,7 +142,7 @@
     ansible.builtin.include_tasks: "rss-notifier.yml"
     when:
       - rss is defined
-      - rss_user is defined
+      - rss_auth is defined
     tags: rss
 
   - name: creating .ssh directory
