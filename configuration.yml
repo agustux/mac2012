@@ -151,6 +151,8 @@
       path: /opt/rss-notifier.sh
       mode: '1777'
     become: true
+    when: rss is defined
+    tags: rss
   - name: making cron for querying rss xml and notifying
     ansible.builtin.cron:
       name: rss notifier
