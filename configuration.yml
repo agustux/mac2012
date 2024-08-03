@@ -143,6 +143,7 @@
     ansible.builtin.template:
       src: "{{ playbook_dir }}/files/rss-notifier.sh.j2"
       dest: /opt/rss-notifier.sh
+    become: true
     when: rss is defined
     tags: rss
   - name: making cron for querying rss xml and notifying
