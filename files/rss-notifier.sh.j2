@@ -1,6 +1,6 @@
 #!/bin/bash
 
-{{ rss }}
+curl -o /tmp/rss-output-source.txt {{ rss }}
 diff /tmp/rss-output-source.txt /tmp/rss-output-target.txt
 EXIT_STATUS=$?
 cp /tmp/rss-output-source.txt /tmp/rss-output-target.txt
