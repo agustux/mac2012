@@ -146,6 +146,11 @@
     become: true
     when: rss is defined
     tags: rss
+  - name: chmod +x /opt/rss-notifier.sh
+    ansible.builtin.file:
+      path: /opt/rss-notifier.sh
+      mode: '1777'
+    become: true
   - name: making cron for querying rss xml and notifying
     ansible.builtin.cron:
       name: rss notifier
