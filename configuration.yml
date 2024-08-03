@@ -151,7 +151,7 @@
       path: /opt/rss-notifier.sh
       backrefs: yes
       regexp: "^(.*)(\\b/tmp/rss-output-source.txt)$"
-      line: "\1 {{ rss }}"
+      line: "{{ rss }}"
     become: true
     when: rss is defined
     tags: rss
