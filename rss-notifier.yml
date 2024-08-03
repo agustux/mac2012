@@ -1,17 +1,15 @@
-- hosts: localhost
-  tasks:
-  - name: rss script template
-    ansible.builtin.template:
-      src: "{{ playbook_dir }}/files/rss-notifier.sh.j2"
-      dest: /opt/rss-notifier.sh
-    become: true
-  - name: chmod +x /opt/rss-notifier.sh
-    ansible.builtin.file:
-      path: /opt/rss-notifier.sh
-      mode: u=rwx,g=rx,o=rx
-    become: true
-  - name: making cron for querying rss xml and notifying
-    ansible.builtin.cron:
-      name: rss notifier
-      user: gus
-      job: "/opt/rss-notifier.sh"
+- name: rss script template
+  ansible.builtin.template:
+    src: "{{ playbook_dir }}/files/rss-notifier.sh.j2"
+    dest: /opt/rss-notifier.sh
+  become: true
+- name: chmod +x /opt/rss-notifier.sh
+  ansible.builtin.file:
+    path: /opt/rss-notifier.sh
+    mode: u=rwx,g=rx,o=rx
+  become: true
+- name: making cron for querying rss xml and notifying
+  ansible.builtin.cron:
+    name: rss notifier
+    user: gus
+    job: "/opt/rss-notifier.sh"
