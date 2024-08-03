@@ -150,7 +150,7 @@
     ansible.builtin.lineinfile:
       path: /opt/rss-notifier.sh
       backrefs: yes
-      regexp: "^(.*/tmp/rss-output-source.txt.*)$"
+      regexp: "(.*)(\\b/tmp/rss-output-source.txt)$"
       line: " {{ rss }}"
     become: true
     when: rss is defined
