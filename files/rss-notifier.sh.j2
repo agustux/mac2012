@@ -1,7 +1,8 @@
 #!/bin/bash
 
-curl -o /tmp/rss-output-source.txt {{ rss }}
-diff /tmp/rss-output-source.txt /tmp/rss-output-target.txt
-EXIT_STATUS=$?
-cp /tmp/rss-output-source.txt /tmp/rss-output-target.txt
-if [ "$EXIT_STATUS" -ne 0 ]; then exit 1; else exit 0; fi
+curl -o /tmp/rss-output-new.xml {{ rss }}
+if diff /tmp/rss-output-new.xml /tmp/rss-output-old.xml; then
+  export XDG_RUNTIME_DIR=/run/user/$(id -u)
+  notify-send -u critical Guschat "New Message"
+fi
+cp /tmp/rss-output-new.xml /tmp/rss-output-old.xml
