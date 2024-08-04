@@ -11,17 +11,17 @@
     tags: is_vm
 
   - name: fixing gtk-theme
-    ansible.builtin.shell: gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
+    ansible.builtin.shell: "gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'"
     tags: theme
   - name: fixing theme default
-    ansible.builtin.shell: gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    ansible.builtin.shell: "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
     tags: theme
 
   - name: setting keyboard configurations to Macbook/Macbook Pro (debconf 1/2)
     ansible.builtin.debconf:
       name: debconf-utils
       question: keyboard-configuration/model
-      value: MacBook/MacBook Pro
+      value: "MacBook/MacBook Pro"
       vtype: select
     become: true
     tags: keyboard
@@ -63,19 +63,19 @@
     tags: dconf
 
   - name: fixing trackpad tap-to-click
-    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true"
     tags: touchpad
   - name: fixing trackpad reverse scrolling
-    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true
+    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true"
     tags: touchpad
   - name: setting two-finger-scrolling
-    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true
+    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true"
     tags: touchpad
   - name: disabling touchpad while typing
-    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true
+    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true"
     tags: touchpad
   - name: secondary click with two-fingers
-    ansible.builtin.shell: gsettings set org.gnome.desktop.peripherals.touchpad click-method fingers
+    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad click-method fingers"
     tags: touchpad
 
   - name: creating .config/autostart directory for camera patch
@@ -92,14 +92,14 @@
     tags: autostart
 
   - name: opening sublime to create configuration files
-    ansible.builtin.shell: 'subl'
+    ansible.builtin.shell: "subl"
     tags: sublime
   - name: sleeping
     ansible.builtin.pause:
       seconds: 5
     tags: sublime
   - name: pkilling sublime
-    ansible.builtin.shell: 'pkill sublime_text'
+    ansible.builtin.shell: "pkill sublime_text"
     tags:
     - NOREPEAT
     - sublime
@@ -107,7 +107,6 @@
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/Preferences.sublime-settings"
       dest: ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
-      remote_src: true
     tags:
     - NOREPEAT
     - sublime
@@ -122,8 +121,8 @@
       - { name: alias.br, value: branch}
       - { name: alias.ci, value: commit}
       - { name: alias.st, value: status}
-      - { name: user.email, value: '{{ ansible_user_id }}@ubuntu'}
-      - { name: user.name, value: '{{ ansible_user_id }}'}
+      - { name: user.email, value: "{{ ansible_user_id }}@ubuntu"}
+      - { name: user.name, value: "{{ ansible_user_id }}"}
     tags: git
 
   - name: enabling and starting bluetooth service
@@ -134,7 +133,7 @@
     become: true
     tags: bluetooth
   - name: unblocking bluetooth
-    ansible.builtin.shell: 'sudo rfkill unblock bluetooth'
+    ansible.builtin.shell: "sudo rfkill unblock bluetooth"
     become: true
     tags: bluetooth
 
@@ -158,13 +157,14 @@
       comment: "{{ ansible_user_id }}@ubuntu"
     tags: ssh-keygen
 
+  - name: starting the configuration setup for printer
+    ansible.builtin.shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
+    when: not is_vm
+    tags: printer
+
   - name: cleaning up tar archive
     ansible.builtin.file:
       path: "{{ item }}"
       state: absent
     with_fileglob:
       - "~/v*.tar.gz"
-
-  - name: starting the configuration setup for printer
-    ansible.builtin.shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
-    when: not is_vm
