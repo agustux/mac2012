@@ -1,5 +1,6 @@
 # Bootstrap
-Use https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#passing-variables-on-the-command-line for reference passing the extra-vars for configuration.yml
+Reference for passing the extra-vars for rss-notifier.yml:
+[https://docs.ansible.com/ansible/latest/playbook_guide/playbooks_variables.html#passing-variables-on-the-command-line]
 
 
 Copy and paste these commands into the terminal:
