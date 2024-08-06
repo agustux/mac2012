@@ -36,9 +36,7 @@
 
   - name: configuring xmodmap
     ansible.builtin.shell: "xmodmap -pke > ~/.Xmodmap"
-    tags:
-    - NOREPEAT
-    - xmodmap
+    tags: xmodmap
   - name: remapping super to ctrl for shortcuts
     ansible.builtin.blockinfile:
       path: ~/.Xmodmap
@@ -49,14 +47,10 @@
           keysym Super_L = Control_L
           add Control = Control_L
       marker: "! {mark} ANSIBLE MANAGED BLOCK"
-    tags:
-    - NOREPEAT
-    - xmodmap
+    tags: xmodmap
   - name: loading xmodmap
     ansible.builtin.shell: "xmodmap ~/.Xmodmap"
-    tags:
-    - NOREPEAT
-    - xmodmap
+    tags: xmodmap
 
   - name: loading dconf settings file
     ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/files/dconf-settings.ini"
@@ -100,16 +94,12 @@
     tags: sublime
   - name: pkilling sublime
     ansible.builtin.shell: "pkill sublime_text"
-    tags:
-    - NOREPEAT
-    - sublime
+    tags: sublime
   - name: configuring sublime
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/Preferences.sublime-settings"
       dest: ~/.config/sublime-text/Packages/User/Preferences.sublime-settings
-    tags:
-    - NOREPEAT
-    - sublime
+    tags: sublime
 
   - name: adding git aliases
     community.general.git_config:
