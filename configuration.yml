@@ -126,6 +126,15 @@
     ansible.builtin.shell: "sudo rfkill unblock bluetooth"
     become: true
     tags: bluetooth
+  - name: copying bredr bluetooth enabled configs
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/main.conf"
+      dest: /etc/bluetooth/main.conf
+    become: true
+    tags: bluetooth
+  - name: restarting bluetooth
+    ansible.builtin.shell: "sudo /etc/init.d/bluetooth restart"
+    tags: bluetooth
 
   - name: rss-notifier tasks
     ansible.builtin.include_tasks: "rss-notifier.yml"
