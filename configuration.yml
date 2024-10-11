@@ -153,6 +153,24 @@
     ansible.builtin.shell: "cat {{ playbook_dir }}/files/printerconfigs.txt | {{ playbook_dir }}/files/printerconfigs.sh"
     when: not is_vm
     tags: printer
+  - name: stopping cupsd to load printer network settings
+    ansible.builtin.systemd_service:
+      state: stopped
+      name: cupsd
+    tags: printer
+    become: true
+  - name: configuring printer network settings
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/printers.conf"
+      dest: /etc/cups/printers.conf
+    become: true
+    tags: printer
+  - name: restarting cupsd
+    ansible.builtin.systemd_service:
+      state: restarted
+      name: cupsd
+    tags: printer
+    become: true
 
   - name: cleaning up tar archive
     ansible.builtin.file:
