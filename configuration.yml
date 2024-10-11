@@ -155,7 +155,7 @@
   - name: stopping cupsd to load printer network settings
     ansible.builtin.systemd_service:
       state: stopped
-      name: cupsd
+      name: cups
     tags: printer
     become: true
   - name: configuring printer network settings
@@ -167,7 +167,7 @@
   - name: restarting cupsd
     ansible.builtin.systemd_service:
       state: restarted
-      name: cupsd
+      name: cups
     tags: printer
     become: true
 
