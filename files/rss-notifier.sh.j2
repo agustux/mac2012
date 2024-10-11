@@ -1,8 +1,0 @@
-#!/bin/bash
-
-curl -o /tmp/rss-output-new.xml -u {{ rss_auth }} {{ rss }}
-if ! diff /tmp/rss-output-new.xml /tmp/rss-output-old.xml; then
-  export XDG_RUNTIME_DIR=/run/user/$(id -u)
-  notify-send -u critical Guschat "New Message"
-fi
-cp /tmp/rss-output-new.xml /tmp/rss-output-old.xml
