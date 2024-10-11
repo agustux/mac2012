@@ -112,7 +112,12 @@
       name: system-config-printer
       state: present
     become: true
-    when: not is_vm
+    tags: printer
+  - name: installing cupsd
+    ansible.builtin.apt:
+      name: cups
+      state: present
+    become: true
     tags: printer
 
   - name: installing virtual machine manager
