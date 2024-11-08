@@ -136,6 +136,23 @@
     ansible.builtin.shell: "sudo /etc/init.d/bluetooth restart"
     tags: bluetooth
 
+  - name: loading codecs for airpods compatibility
+    ansible.builtin.blockinfile:
+      path: /usr/share/wireplumber/wireplumber.conf
+      block: |
+        monitor.bluez.properties = {
+          bluez5.codecs = [ sbc sbc_xq aac ]
+        }
+      marker: ""
+    become: true
+    tags: bluetooth
+  - name: restarting wireplumber
+    ansible.builtin.systemd_service:
+      name: wireplumber
+      state: restarted
+      scope: user
+    tags: bluetooth
+
   - name: creating .ssh directory
     ansible.builtin.file:
       path: ~/.ssh
