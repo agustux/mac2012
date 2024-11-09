@@ -120,6 +120,14 @@
     become: true
     tags: printer
 
+  - name: purging cups-browsed and its malware
+    ansible.builtin.apt:
+      name: cups-browsed
+      state: absent
+      purge: true
+    become: true
+    tags: cups-browsed
+
   - name: installing virtual machine manager
     ansible.builtin.apt:
       name: virt-manager
