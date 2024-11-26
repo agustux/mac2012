@@ -119,7 +119,6 @@
       state: present
     become: true
     tags: printer
-
   - name: purging cups-browsed and its malware
     ansible.builtin.apt:
       name: cups-browsed
@@ -127,6 +126,23 @@
       purge: true
     become: true
     tags: cups-browsed
+
+  - name: installing virtual machine manager
+    ansible.builtin.apt:
+      name: virt-manager
+      state: present
+    become: true
+
+  - name: snap install localsend
+    ansible.builtin.shell: 'sudo snap install localsend'
+    become: true
+    tags: localsend
+  - name: installing ufw
+    ansible.builtin.apt:
+      name: ufw
+      state: present
+    become: true
+    tags: ufw
 
   - name: installing virtual machine manager
     ansible.builtin.apt:
