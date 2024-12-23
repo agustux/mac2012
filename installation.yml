@@ -59,7 +59,7 @@
       url: https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
       dest: /tmp/
     tags: chrome
-  - name: intsalling chrome
+  - name: installing chrome
     ansible.builtin.apt:
       deb: /tmp/google-chrome-stable_current_amd64.deb
     become: true
