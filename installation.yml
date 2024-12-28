@@ -110,6 +110,7 @@
   - name: installing bluetooth aac codec for airpod sound
     ansible.builtin.apt_repository:
       repo: ppa:aglasgall/pipewire-extra-bt-codecs
+    tags: bluetooth
   - name: updating and upgrading to load codec
     ansible.builtin.apt:
       update_cache: true
