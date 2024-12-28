@@ -146,6 +146,9 @@
 
     become: true
     tags: bluetooth
+    # To get the sound to work, we removed the "aac" part above manually and
+    # restarted wireplumber with "systemctl restart wireplumber --user"
+    # All codecs worked afterwards, even aac (surprisingly)
   - name: restarting wireplumber
     ansible.builtin.systemd_service:
       name: wireplumber
