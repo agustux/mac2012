@@ -155,12 +155,6 @@
       state: restarted
       scope: user
     tags: bluetooth
-  - name: copying bluetooth codec patch to autostart processes
-    ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/systemctl-1.desktop"
-      dest: ~/.config/autostart/systemctl-1.desktop
-      mode: '664'
-    tags: autostart
 
   - name: creating .ssh directory
     ansible.builtin.file:
