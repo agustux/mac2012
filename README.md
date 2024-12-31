@@ -1,5 +1,6 @@
 # Bootstrap
-The script below should be all that is needed to start it
+The script below should be all that is needed to set up your ubuntu macbook
+
 Copy and paste these commands into the terminal:
 ```
 sudo apt-get update
@@ -22,8 +23,3 @@ cat ~/.ssh/id_ed25519.pub
 echo "to apply these changes run:"
 echo "sudo reboot"
 ```
-# Regarding AAC and other codecs with AirPods:
-The installation and configuration YAMLs should have done the job to
-install and configure the right codecs to get sound to work with paired AirPods. However, we had to manually remove the "aac" part in /usr/share/wireplumber/wireplumber.conf (added by configuration.yml) and restart wireplumber with ```systemctl restart wireplumber --user```.
-
-Note: editing /usr/share/wireplumber/wireplumber.conf required sudo access
