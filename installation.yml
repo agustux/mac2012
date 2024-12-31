@@ -162,3 +162,48 @@
     become: true
     when: not is_vm
     tags: vmm
+
+  - name: installing VLC
+    ansible.builtin.apt:
+      name: vlc
+      state: present
+    become: true
+    tags: libdvd-pkg
+  - name: installing sg3-utils (SCSI generic ultis)
+    ansible.builtin.apt:
+      name: sg3-utils
+      state: present
+    become: true
+    tags: libdvd-pkg
+  - name: installing libdvd-pkg (VLC optical drive library)
+    ansible.builtin.apt:
+      name: libdvd-pkg
+      state: present
+    become: true
+    environment:
+      DEBIAN_FRONTEND: noninteractive
+    tags: libdvd-pkg
+  - name: reconfiguring libdvd-pkg for build and installation (1/3)
+    ansible.builtin.debconf:
+      name: libdvd-pkg
+      question: libdvd-pkg/build
+      value: "true"
+      vtype: boolean
+    become: true
+    tags: libdvd-pkg
+  - name: reconfiguring libdvd-pkg for build and installation (2/3)
+    ansible.builtin.debconf:
+      name: libdvd-pkg
+      question: libdvd-pkg/post-invoke_hook-install
+      value: "true"
+      vtype: boolean
+    become: true
+    tags: libdvd-pkg
+  - name: reconfiguring libdvd-pkg for build and installation (3/3)
+    ansible.builtin.debconf:
+      name: libdvd-pkg
+      question: libdvd-pkg/post-invoke_hook-remove
+      value: "false"
+      vtype: boolean
+    become: true
+    tags: libdvd-pkg
