@@ -135,7 +135,6 @@
   - name: restarting bluetooth
     ansible.builtin.shell: "sudo /etc/init.d/bluetooth restart"
     tags: bluetooth
-
   - name: loading codecs for airpods compatibility
     ansible.builtin.blockinfile:
       path: /usr/share/wireplumber/wireplumber.conf
@@ -146,9 +145,6 @@
 
     become: true
     tags: bluetooth
-    # To get the sound to work, we removed the "aac" part above manually and
-    # restarted wireplumber with "systemctl restart wireplumber --user"
-    # All codecs worked afterwards, even aac (surprisingly)
   - name: restarting wireplumber
     ansible.builtin.systemd_service:
       name: wireplumber
@@ -198,6 +194,7 @@
       from_ip: "192.168.1.0/16"
       state: enabled
     become: true
+    tags: localsend
 
   - name: cleaning up tar archive
     ansible.builtin.file:
