@@ -3,10 +3,8 @@ The script below should be all that is needed to set up your ubuntu macbook
 
 Copy and paste these commands into the terminal:
 ```
-sudo apt-get update
-sudo apt-get upgrade -y
-sudo apt install python3.12-venv -y
-sudo apt install curl -y
+sudo apt update && sudo apt upgrade -y
+sudo apt install python3.12-venv curl -y
 python3 -m venv ansible_venv
 ./ansible_venv/bin/python3 -m pip install --upgrade pip
 ./ansible_venv/bin/python3 -m pip install ansible-core
@@ -20,6 +18,5 @@ ANSIBLE_CONFIG=mac2012-1.0.14/ansible.cfg ./ansible_venv/bin/ansible-playbook ma
 ANSIBLE_CONFIG=mac2012-1.0.14/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.0.14/configuration.yml
 echo "remember to upload the following key to your github account:"
 cat ~/.ssh/id_ed25519.pub
-echo "to apply these changes run:"
-echo "sudo reboot"
+echo "reboot to finish applying these changes"
 ```
