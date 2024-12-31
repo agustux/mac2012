@@ -126,7 +126,7 @@
     ansible.builtin.shell: "sudo rfkill unblock bluetooth"
     become: true
     tags: bluetooth
-  - name: copying bredr bluetooth enabled configs
+  - name: copying bredr bluetooth and A2DP profile enabled configs
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/main.conf"
       dest: /etc/bluetooth/main.conf
