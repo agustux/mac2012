@@ -45,7 +45,7 @@
     ansible.builtin.shell: "xmodmap ~/.Xmodmap"
     tags: xmodmap
 
-  - name: loading dconf settings file
+  - name: loading dconf settings file (theme, peripheral, and other settings)
     ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/files/dconf-settings.ini"
     tags: dconf
 
