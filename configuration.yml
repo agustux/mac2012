@@ -10,13 +10,6 @@
       is_vm: "{{ found_qemu.rc == 0 }}"
     tags: is_vm
 
-  - name: fixing gtk-theme
-    ansible.builtin.shell: "gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'"
-    tags: theme
-  - name: fixing theme default
-    ansible.builtin.shell: "gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
-    tags: theme
-
   - name: setting keyboard configurations to Macbook/Macbook Pro (debconf 1/2)
     ansible.builtin.debconf:
       name: debconf-utils
@@ -55,22 +48,6 @@
   - name: loading dconf settings file
     ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/files/dconf-settings.ini"
     tags: dconf
-
-  - name: fixing trackpad tap-to-click
-    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true"
-    tags: touchpad
-  - name: fixing trackpad reverse scrolling
-    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll true"
-    tags: touchpad
-  - name: setting two-finger-scrolling
-    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad two-finger-scrolling-enabled true"
-    tags: touchpad
-  - name: disabling touchpad while typing
-    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad disable-while-typing true"
-    tags: touchpad
-  - name: secondary click with two-fingers
-    ansible.builtin.shell: "gsettings set org.gnome.desktop.peripherals.touchpad click-method fingers"
-    tags: touchpad
 
   - name: creating .config/autostart directory for camera patch
     ansible.builtin.file:
