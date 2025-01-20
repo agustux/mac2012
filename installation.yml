@@ -111,6 +111,7 @@
     ansible.builtin.apt_repository:
       repo: ppa:aglasgall/pipewire-extra-bt-codecs
     tags: bluetooth
+    become: true
   - name: updating and upgrading to load codec
     ansible.builtin.apt:
       update_cache: true
