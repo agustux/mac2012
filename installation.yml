@@ -106,7 +106,6 @@
       state: present
     become: true
     tags: bluetooth
-
   - name: installing bluetooth aac codec for airpod sound
     ansible.builtin.apt_repository:
       repo: ppa:aglasgall/pipewire-extra-bt-codecs
@@ -139,22 +138,25 @@
     become: true
     tags: cups-browsed
 
-  - name: installing virtual machine manager
-    ansible.builtin.apt:
-      name: virt-manager
-      state: present
-    become: true
-
-  - name: snap install localsend
-    ansible.builtin.shell: 'sudo snap install localsend'
-    become: true
-    tags: localsend
   - name: installing ufw
     ansible.builtin.apt:
       name: ufw
       state: present
     become: true
     tags: ufw
+
+  - name: install localsend snap
+    community.general.snap:
+      name: localsend
+      state: present
+    become: true
+    tags: snap
+  - name: remove thunderbird snap
+    community.general.snap:
+      name: thunderbird
+      state: absent
+    become: true
+    tags: snap
 
   - name: installing virtual machine manager
     ansible.builtin.apt:
