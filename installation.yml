@@ -225,3 +225,15 @@
       vtype: boolean
     become: true
     tags: libdvd-pkg
+
+  - name: installing gnome-shell-extensions
+    ansible.builtin.apt:
+      name: gnome-shell-extensions
+      state: present
+    become: true
+    tags: gnome-extensions
+  - name: installing gnome-shell-extension-manager
+    ansible.builtin.apt:
+      name: gnome-shell-extension-manager
+      state: present
+    become: true
