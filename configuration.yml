@@ -173,6 +173,10 @@
     become: true
     tags: localsend
 
+  - name: installing and enabling blur-my-shell and openweather-refined
+    ansible.builtin.shell: "{{ playbook_dir }}/files/gnome-extensions.sh"
+    tags: gnome-extensions
+
   - name: cleaning up tar archive
     ansible.builtin.file:
       path: "{{ item }}"
