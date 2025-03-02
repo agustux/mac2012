@@ -157,6 +157,21 @@
       state: absent
     become: true
     tags: snap
+  - name: install blender snap
+    community.general.snap:
+      name: localsend
+      state: present
+      classic: true
+      channel: 3.6lts/stable
+    become: true
+    tags: snap
+  - name: install pycharm-community snap
+    community.general.snap:
+      name: pycharm-community
+      state: present
+      classic: true
+    become: true
+    tags: snap
 
   - name: installing virtual machine manager
     ansible.builtin.apt:
