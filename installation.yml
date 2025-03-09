@@ -159,7 +159,7 @@
     tags: snap
   - name: install blender snap
     community.general.snap:
-      name: localsend
+      name: blender
       state: present
       classic: true
       channel: 3.6lts/stable
@@ -187,10 +187,10 @@
       state: present
     become: true
     tags: libdvd-pkg
-  - name: installing sg3-utils (SCSI generic ultis)
+  - name: installing sg3-utils (SCSI generic utils)
     ansible.builtin.apt:
       name: sg3-utils
-      state: present
+      state: present # did fixed instead in test 1
     become: true
     tags: libdvd-pkg
   - name: installing libdvd-pkg (VLC optical drive library)
