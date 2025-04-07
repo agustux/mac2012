@@ -1,15 +1,5 @@
 - hosts: localhost
   tasks:
-  - name: check if this is a VM
-    ansible.builtin.shell: "lsusb | grep QEMU"
-    ignore_errors: true
-    register: found_qemu
-    tags: is_vm
-  - name: setting is_vm
-    ansible.builtin.set_fact:
-      is_vm: "{{ found_qemu.rc == 0 }}"
-    tags: is_vm
-
   - name: apt update and upgrade
     ansible.builtin.apt:
       update_cache: true
@@ -182,8 +172,21 @@
       name: virt-manager
       state: present
     become: true
-    when: not is_vm
-    tags: vmm
+    tags: virtual-machines
+  - name: adding quickemu repository
+    ansible.builtin.shell: 'sudo apt-add-repository ppa:flexiondotorg/quickemu'
+    become: true
+    tags: virtual-machines
+  - name: updating cache and installing quickemu
+    ansible.builtin.apt:
+      name: quickemu
+      update_cache: true
+    tags: virtual-machines
+  - name: installing quickgui
+    ansible.builtin.apt:
+      name: quickgui
+      update_cache: true
+    tags: virtual-machines
 
   - name: installing VLC
     ansible.builtin.apt:
