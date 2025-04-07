@@ -17,7 +17,8 @@
       value: "MacBook/MacBook Pro"
       vtype: select
     become: true
-    tags: keyboard
+    tags:
+    - mac-keyboard
   - name: setting keyboard configurations to Macbook/Macbook Pro (debconf 2/2)
     ansible.builtin.debconf:
       name: debconf-utils
@@ -25,11 +26,14 @@
       value: "macbook78"
       vtype: string
     become: true
-    tags: keyboard
+    tags:
+    - mac-keyboard
 
   - name: configuring xmodmap
     ansible.builtin.shell: "xmodmap -pke > ~/.Xmodmap"
-    tags: xmodmap
+    tags:
+    - xmodmap
+    - mac-keyboard
   - name: remapping super to ctrl for shortcuts
     ansible.builtin.blockinfile:
       path: ~/.Xmodmap
@@ -40,14 +44,20 @@
           keysym Super_L = Control_L
           add Control = Control_L
       marker: "! {mark} ANSIBLE MANAGED BLOCK"
-    tags: xmodmap
+    tags:
+    - xmodmap
+    - mac-keyboard
   - name: loading xmodmap
     ansible.builtin.shell: "xmodmap ~/.Xmodmap"
-    tags: xmodmap
+    tags:
+    - xmodmap
+    - mac-keyboard
 
   - name: loading dconf settings file (theme, peripheral, and other settings)
     ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/files/dconf-settings.ini"
-    tags: dconf
+    tags:
+    - dconf
+    - mac-keyboard
 
   - name: creating .config/autostart directory for camera patch
     ansible.builtin.file:
