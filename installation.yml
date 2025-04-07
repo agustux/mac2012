@@ -190,13 +190,17 @@
       name: vlc
       state: present
     become: true
-    tags: libdvd-pkg
+    tags:
+    - libdvd-pkg
+    - optical-drive
   - name: installing sg3-utils (SCSI generic utils)
     ansible.builtin.apt:
       name: sg3-utils
       state: present # did fixed instead in test 1
     become: true
-    tags: libdvd-pkg
+    tags:
+    - libdvd-pkg
+    - optical-drive
   - name: installing libdvd-pkg (VLC optical drive library)
     ansible.builtin.apt:
       name: libdvd-pkg
@@ -204,7 +208,9 @@
     become: true
     environment:
       DEBIAN_FRONTEND: noninteractive
-    tags: libdvd-pkg
+    tags:
+    - libdvd-pkg
+    - optical-drive
   - name: reconfiguring libdvd-pkg for build and installation (1/3)
     ansible.builtin.debconf:
       name: libdvd-pkg
@@ -212,7 +218,9 @@
       value: "true"
       vtype: boolean
     become: true
-    tags: libdvd-pkg
+    tags:
+    - libdvd-pkg
+    - optical-drive
   - name: reconfiguring libdvd-pkg for build and installation (2/3)
     ansible.builtin.debconf:
       name: libdvd-pkg
@@ -220,7 +228,9 @@
       value: "true"
       vtype: boolean
     become: true
-    tags: libdvd-pkg
+    tags:
+    - libdvd-pkg
+    - optical-drive
   - name: reconfiguring libdvd-pkg for build and installation (3/3)
     ansible.builtin.debconf:
       name: libdvd-pkg
@@ -228,7 +238,9 @@
       value: "false"
       vtype: boolean
     become: true
-    tags: libdvd-pkg
+    tags:
+    - libdvd-pkg
+    - optical-drive
 
   - name: installing gnome-shell-extensions
     ansible.builtin.apt:
