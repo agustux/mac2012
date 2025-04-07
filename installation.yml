@@ -181,11 +181,13 @@
     ansible.builtin.apt:
       name: quickemu
       update_cache: true
+    become: true
     tags: virtual-machines
   - name: installing quickgui
     ansible.builtin.apt:
       name: quickgui
       update_cache: true
+    become: true
     tags: virtual-machines
 
   - name: installing VLC
