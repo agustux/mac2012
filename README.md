@@ -24,3 +24,5 @@ echo "reboot to finish applying these changes"
 NOTE: The configuration.yml playbook installs the Blur My Shell and OpenWeather Refined GNOME
 Extensions by default. Append "--skip-tags gnome-extensions" to that line to skip their installation.
 Reboot is required for the extensions to show
+
+Append "--skip-tags mac-keyboard" to to skip any configuration to the keyboard. The playbooks remap it to imitate a mac's.
