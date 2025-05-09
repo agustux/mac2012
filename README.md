@@ -12,17 +12,20 @@ python3 -m venv ansible_venv
 ./ansible_venv/bin/ansible-galaxy collection install community.general
 ./ansible_venv/bin/ansible-galaxy collection install community.crypto
 mkdir ansible
-curl -LO https://github.com/agustux/mac2012/archive/refs/tags/v1.0.17.tar.gz
-tar -xvf $HOME/v1.0.17.tar.gz -C ~
-ANSIBLE_CONFIG=mac2012-1.0.17/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.0.17/installation.yml
-ANSIBLE_CONFIG=mac2012-1.0.17/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.0.17/configuration.yml
+curl -LO https://github.com/agustux/mac2012/archive/refs/tags/v1.0.18.tar.gz
+tar -xvf $HOME/v1.0.18.tar.gz -C ~
+ANSIBLE_CONFIG=mac2012-1.0.18/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.0.18/installation.yml
+ANSIBLE_CONFIG=mac2012-1.0.18/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.0.18/configuration.yml
 echo "remember to upload the following key to your github account:"
 cat ~/.ssh/id_ed25519.pub
 echo "reboot to finish applying these changes"
 ```
 
-NOTE: The configuration.yml playbook installs the Blur My Shell and OpenWeather Refined GNOME
-Extensions by default. Append "--skip-tags gnome-extensions" to that line to skip their installation.
-Reboot is required for the extensions to show
+NOTES:
+The configuration.yml playbook installs the Blur My Shell and OpenWeather Refined GNOME Extensions by default. Append "--skip-tags gnome-extensions" to that line to skip their installation.
 
-Append "--skip-tags mac-keyboard" to to skip any configuration to the keyboard. The playbooks remap it to imitate a mac's.
+Append "--skip-tags mac-keyboard" to line 18 to skip any configuration to the keyboard. The playbooks remap it to imitate a mac's.
+
+Similarly, append "--skip-tags mac-fan" to line 18 to not add the scripts that
+overclock the fans. By default, ubuntu has not been able to manage them effectively and the CPU is prone to running very hot without the kernel
+bothering to turn up the fan. The scripts keep the fans at a constant 4650 RPMs (75%)
