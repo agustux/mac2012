@@ -43,21 +43,31 @@
     - xmodmap
     - mac-keyboard
 
-  - name: copying fan setting on wakeup patch
+  - name: copying fan setting on wakeup from suspend
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/fan-overclock.sh"
       dest: /usr/lib/systemd/system-sleep/fan-overclock.sh
       mode: '750'
     become: true
     tags: mac-fan
-  - name: copying fan setting on startup patch
+  - name: copying fan setting on startup (script)
     ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/startup-fan-overclock.sh"
-      dest: /etc/init.d/startup-fan-overclock.sh
+      src: "{{ playbook_dir }}/files/fan-overclock-startup.sh"
+      dest: /opt/fan-overclock-startup.sh
       mode: '750'
     become: true
     tags: mac-fan
-
+  - name: copying fan setting on startup (systemd_service)
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/fan-overclock.service"
+      dest: /etc/systemd/system/fan-overclock.service
+      mode: '750'
+    become: true
+    tags: mac-fan
+  - name: enabling fan-overclock.service
+    ansible.builtin.systemd_service:
+      name: fan-overclock
+      enabled: true
 
   - name: loading dconf settings file (theme, peripheral, and other settings)
     ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/files/dconf-settings.ini"
