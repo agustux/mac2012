@@ -1,0 +1,8 @@
+[Unit]
+Description=fan-overclock on startup
+
+[Service]
+ExecStart=/opt/fan-overclock-startup.sh
+
+[Install]
+WantedBy=multi-user.target
