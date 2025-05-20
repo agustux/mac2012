@@ -60,7 +60,6 @@
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/fan-overclock.service"
       dest: /etc/systemd/system/fan-overclock.service
-      mode: '750'
     become: true
     tags: mac-fan
   - name: enabling fan-overclock.service
