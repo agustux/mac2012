@@ -2,7 +2,9 @@
 Description=fan-overclock on startup
 
 [Service]
+Type=oneshot
 ExecStart=/opt/fan-overclock-startup.sh
+User=root
 
 [Install]
 WantedBy=multi-user.target
