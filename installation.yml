@@ -188,7 +188,7 @@
     become: true
     tags: jetbrains
   - name: executing installer for toolbox
-    ansible.builtin.script: /opt/jetbrains/jetbrains-toolbox
+    ansible.builtin.script: /opt/jetbrains-toolbox-2.6.2.41321/jetbrains-toolbox
     tags: jetbrains
 
   - name: installing virtual machine manager
