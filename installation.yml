@@ -177,7 +177,7 @@
     tags: jetbrains
   - name: downloading jetbrains toolbox
     ansible.builtin.get_url:
-      url: https://www.jetbrains.com/toolbox-app/download/download-thanks.html?platform=linux
+      url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.6.2.41321.tar.gz
       dest: /opt/jetbrains.tar.gz
     become: true
     tags: jetbrains
