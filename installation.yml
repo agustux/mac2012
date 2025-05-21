@@ -139,6 +139,11 @@
     become: true
     tags: ufw
 
+  - name: purging snap
+    ansible.builtin.script: "{{ playbook_dir }}/files/remove-snap.sh"
+    become: true
+    tags: nosnap
+
   - name: downloading localsend .deb
     ansible.builtin.get_url:
       url: https://github.com/localsend/localsend/releases/download/v1.17.0/LocalSend-1.17.0-linux-x86-64.deb
