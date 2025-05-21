@@ -139,33 +139,57 @@
     become: true
     tags: ufw
 
-  - name: install localsend snap
-    community.general.snap:
-      name: localsend
-      state: present
+  - name: purging snap
+    ansible.builtin.script: "{{ playbook_dir }}/files/remove-snap.sh"
     become: true
-    tags: snap
-  - name: remove thunderbird snap
-    community.general.snap:
-      name: thunderbird
+    tags: nosnap
+
+  - name: downloading localsend .deb
+    ansible.builtin.get_url:
+      url: https://github.com/localsend/localsend/releases/download/v1.17.0/LocalSend-1.17.0-linux-x86-64.deb
+      dest: /tmp/localsend.deb
+    tags: localsend
+  - name: installing localsend
+    ansible.builtin.apt:
+      deb: /tmp/localsend.deb
+    become: true
+    tags: localsend
+  - name: deleting localsend .deb
+    ansible.builtin.file:
+      path: /tmp/localsend.deb
       state: absent
     become: true
-    tags: snap
-  - name: install blender snap
-    community.general.snap:
-      name: blender
+    tags: localsend
+
+  - name: install jetbrains toolbox prerequisites
+    ansible.builtin.apt:
+      name: "{{ item.name }}"
       state: present
-      classic: true
-      channel: 3.6lts/stable
+    loop:
+      - { name: libfuse2 }
+      - { name: libxi6 }
+      - { name: libxrender1 }
+      - { name: libxtst6 }
+      - { name: mesa-utils }
+      - { name: libfontconfig }
+      - { name: libgtk-3-bin }
     become: true
-    tags: snap
-  - name: install pycharm-community snap
-    community.general.snap:
-      name: pycharm-community
-      state: present
-      classic: true
+    tags: jetbrains
+  - name: downloading jetbrains toolbox
+    ansible.builtin.get_url:
+      url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.6.2.41321.tar.gz
+      dest: /opt/jetbrains.tar.gz
     become: true
-    tags: snap
+    tags: jetbrains
+  - name: extract jetbrains toolbox
+    ansible.builtin.unarchive:
+      src: /opt/jetbrains.tar.gz
+      dest: /opt/
+    become: true
+    tags: jetbrains
+  - name: executing installer for toolbox
+    ansible.builtin.script: /opt/jetbrains-toolbox-2.6.2.41321/jetbrains-toolbox
+    tags: jetbrains
 
   - name: installing virtual machine manager
     ansible.builtin.apt:
