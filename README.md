@@ -28,3 +28,5 @@ The configuration.yml playbook installs the Blur My Shell and OpenWeather Refine
 The playbooks remap the keyboard to imitate a mac's. Append "--skip-tags mac-keyboard" when running the configuration.yml to skip any configuration to the keyboard.
 
 By default, ubuntu has not been able to manage thermals effectively and the CPU is prone to running very hot without the kernel bothering to turn up the fan. The scripts keep the fans at a constant 4650 RPMs (75%). Append "--skip-tags mac-fan" when running the configuration.yml to not add the scripts that overclock the fans.
+
+The playbooks install and configure performance enhancement tools to run as close to it's rated high frequency as possible while sacrificing battery life. Append "--skip-tags performance" when executing both playbooks to skip this configuration.
