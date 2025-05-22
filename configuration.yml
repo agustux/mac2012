@@ -216,7 +216,7 @@
     become: true
     tags: performance
   - name: enabling set-cpufreq service
-    ansbile.builtin.systemd_service:
+    ansible.builtin.systemd_service:
       name: set-cpufreq
       enabled: true
       daemon-reload: true
