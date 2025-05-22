@@ -282,3 +282,17 @@
       name: gnome-shell-extension-manager
       state: present
     become: true
+    tags: gnome-extensions
+
+  - name: installing cpufrequtils (performance tools)
+    ansible.builtin.apt:
+      name: cpufrequtils
+      state: present
+    become: true
+    tags: performance
+  - name: installing preload (performance tools)
+    ansible.builtin.apt:
+      name: preload
+      state: present
+    become: true
+    tags: performance
