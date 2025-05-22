@@ -190,7 +190,7 @@
     tags: printer
     become: true
 
-  - name: allow all access to port 53317 (localsend)
+  - name: allow all access to port 53317 (for localsend)
     community.general.ufw:
       rule: allow
       port: "53317"
@@ -202,6 +202,26 @@
   - name: installing and enabling blur-my-shell and openweather-refined
     ansible.builtin.shell: "{{ playbook_dir }}/files/gnome-extensions.sh"
     tags: gnome-extensions
+
+  - name: copying service file for performance mode on cpu
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/set-cpufreq.service"
+      dest: /etc/systemd/system/set-cpufreq.service
+    become: true
+    tags: performance
+  - name: copying script for performance mode on cpu
+    ansible.builtin.copy:
+      src: "{{ playbook_dir }}/files/set-cpufreq.sh"
+      dest: /usr/bin/set-cpufreq.sh
+    become: true
+    tags: performance
+  - name: enabling set-cpufreq service
+    ansbile.builtin.systemd_service:
+      name: set-cpufreq
+      enabled: true
+      daemon-reload: true
+    become: true
+    tags: performance
 
   - name: cleaning up tar archive
     ansible.builtin.file:
