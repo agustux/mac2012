@@ -214,6 +214,7 @@
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/set-cpufreq.sh"
       dest: /usr/bin/set-cpufreq.sh
+      mode: '755'
     become: true
     tags: performance
   - name: enabling set-cpufreq service
