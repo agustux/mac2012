@@ -54,6 +54,7 @@
     ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/fan-overclock-startup.sh"
       dest: /opt/fan-overclock-startup.sh
+      mode: '750'
     become: true
     tags: mac-fan
   - name: copying fan setting on startup (systemd_service)
