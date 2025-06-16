@@ -110,7 +110,9 @@
       update_cache: true
       upgrade: dist
     become: true
-    tags: slow
+    tags:
+    - slow
+    - bluetooth
 
   - name: installing system-config-printer
     ansible.builtin.apt:
@@ -181,7 +183,7 @@
       dest: /opt/jetbrains.tar.gz
     become: true
     tags: jetbrains
-  - name: extract jetbrains toolbox
+  - name: extracting jetbrains toolbox
     ansible.builtin.unarchive:
       src: /opt/jetbrains.tar.gz
       dest: /opt/
@@ -189,6 +191,18 @@
     tags: jetbrains
   - name: executing installer for toolbox
     ansible.builtin.script: /opt/jetbrains-toolbox-2.6.2.41321/jetbrains-toolbox
+    tags: jetbrains
+  - name: cleaning up jetbrains archive (1/2)
+    ansible.builtin.file:
+      path: /opt/jetbrains-toolbox-2.6.2.41321/
+      state: absent
+    become: true
+    tags: jetbrains
+  - name: cleaning up jetbrains archive (2/2)
+    ansible.builtin.file:
+      path: /opt/jetbrains.tar.gz
+      state: absent
+    become: true
     tags: jetbrains
 
   - name: installing virtual machine manager
