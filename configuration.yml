@@ -76,6 +76,12 @@
     - dconf
     - mac-keyboard
 
+  - name: loading thinkpad(generic) settings file (theme, peripheral, and other settings)
+    ansible.builtin.shell: "dconf load / < {{ playbook_dir }}/files/dconf-settings-thinkpad.ini"
+    tags:
+    - thinkpad
+    - never
+
   - name: creating .config/autostart directory for camera patch
     ansible.builtin.file:
       path: ~/.config/autostart
