@@ -44,8 +44,6 @@ python3 -m venv ansible_venv
 mkdir ansible
 curl -LO https://github.com/agustux/mac2012/archive/refs/tags/v1.1.2.tar.gz
 tar -xvf $HOME/v1.1.2.tar.gz -C ~
-ANSIBLE_CONFIG=mac2012-1.1.2/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.2/installation.yml --skip-tags "xkeycaps,mac-keyboard,debconf-utils,bluetooth,libdvd-pkg,optical-drive"
-ANSIBLE_CONFIG=mac2012-1.1.2/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.2/configuration.yml --skip-tags "mac-keyboard,xmodmap,mac-fan,dconf,autostart,bluetooth,printer"
+ANSIBLE_CONFIG=mac2012-1.1.2/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.2/installation.yml --skip-tags "xkeycaps,mac-keyboard,debconf-utils,libdvd-pkg,optical-drive,performance"
+ANSIBLE_CONFIG=mac2012-1.1.2/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.2/configuration.yml --skip-tags "mac-keyboard,xmodmap,mac-fan,dconf,performance"
 ```
-Reference for Thinkpad fingerprint reader:
-https://askubuntu.com/questions/511876/how-do-i-install-a-fingerprint-reader-on-lenovo-thinkpad
