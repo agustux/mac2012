@@ -81,6 +81,21 @@
     tags:
     - thinkpad
     - never
+  - name: fixing thinkpad fan-control bool
+    ansible.builtin.file:
+      src: "{{ playbook_dir }}/files/thinkpad.conf"
+      dest: /etc/modprobe.d/thinkpad.conf
+      mode: 644
+    become: true
+    tags:
+    - thinkpad
+    - never
+  - name: loading thinkfan fan_control bool
+    ansible.builtin.shell: sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi
+    become: true
+    tags:
+    - thinkpad
+    - never
 
   - name: creating .config/autostart directory for camera patch
     ansible.builtin.file:
