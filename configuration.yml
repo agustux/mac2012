@@ -96,6 +96,15 @@
     tags:
     - thinkpad
     - never
+  - name: adding MAC address randomizing conf to NetworkManager
+    ansible.builtin.file:
+      src: "{{ playbook_dir }}/files/mac-randomize.conf"
+      dest: /etc/NetworkManager/conf.d/mac-randomize.conf
+      mode: 644
+    become: true
+    tags:
+    - thinkpad
+    - never
 
   - name: creating .config/autostart directory for camera patch
     ansible.builtin.file:
