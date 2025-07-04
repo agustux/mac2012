@@ -1,7 +1,8 @@
 #!/bin/bash
 
 array=( https://extensions.gnome.org/extension/3193/blur-my-shell/
-https://extensions.gnome.org/extension/6655/openweather/ )
+https://extensions.gnome.org/extension/6655/openweather/
+https://extensions.gnome.org/extension/6670/bluetooth-battery-meter/ )
 
 for i in "${array[@]}"
 do
