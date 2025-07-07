@@ -81,11 +81,28 @@
     tags:
     - thinkpad
     - never
-  - name: fixing thinkpad fan-control bool
+  - name: installing thinkfan tool
+    ansible.builtin.apt:
+      name: thinkfan
+      state: present
+    become: true
+    tags:
+    - thinkpad
+    - never
+  - name: fixing thinkpad fan-control bool in modprobe
     ansible.builtin.file:
-      src: "{{ playbook_dir }}/files/thinkpad.conf"
-      dest: /etc/modprobe.d/thinkpad.conf
+      src: "{{ playbook_dir }}/files/thinkfan.conf"
+      dest: /etc/modprobe.d/thinkfan.conf
       mode: 644
+    become: true
+    tags:
+    - thinkpad
+    - never
+  - name: adding thinkfan speeds and temperatures file
+    ansible.builtin.file:
+      src: "{{ playbook_dir }}/files/thinkfan-etc.conf"
+      dest: /etc/thinkfan.conf
+      mode: 750
     become: true
     tags:
     - thinkpad
