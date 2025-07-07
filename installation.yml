@@ -58,7 +58,7 @@
       deb: /tmp/google-chrome-stable_current_amd64.deb
     become: true
     tags: chrome
-  - name: deleting chrome garbage
+  - name: deleting chrome .deb
     ansible.builtin.file:
       path: /tmp/google-chrome-stable_current_amd64.deb
       state: absent
