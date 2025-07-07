@@ -98,21 +98,6 @@
     tags:
     - thinkpad
     - never
-  - name: adding thinkfan speeds and temperatures file
-    ansible.builtin.copy:
-      src: "{{ playbook_dir }}/files/thinkfan-etc.conf"
-      dest: /etc/thinkfan.conf
-      mode: '0750'
-    become: true
-    tags:
-    - thinkpad
-    - never
-  - name: adding START bool for thinkfan
-    ansible.builtin.shell: echo "START=\"yes\"" >> /etc/default/thinkfan
-    become: true
-    tags:
-    - thinkpad
-    - never
   - name: loading thinkfan fan_control bool
     ansible.builtin.shell: sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi
     become: true
