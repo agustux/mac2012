@@ -90,19 +90,19 @@
     - thinkpad
     - never
   - name: fixing thinkpad fan-control bool in modprobe
-    ansible.builtin.file:
+    ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/thinkfan.conf"
       dest: /etc/modprobe.d/thinkfan.conf
-      mode: 644
+      mode: '0644'
     become: true
     tags:
     - thinkpad
     - never
   - name: adding thinkfan speeds and temperatures file
-    ansible.builtin.file:
+    ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/thinkfan-etc.conf"
       dest: /etc/thinkfan.conf
-      mode: 750
+      mode: '0750'
     become: true
     tags:
     - thinkpad
@@ -120,10 +120,10 @@
     - thinkpad
     - never
   - name: adding MAC address randomizing conf to NetworkManager
-    ansible.builtin.file:
+    ansible.builtin.copy:
       src: "{{ playbook_dir }}/files/mac-randomize.conf"
       dest: /etc/NetworkManager/conf.d/mac-randomize.conf
-      mode: 644
+      mode: '0644'
     become: true
     tags:
     - thinkpad
