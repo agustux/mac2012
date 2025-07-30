@@ -304,9 +304,3 @@
       state: present
     become: true
     tags: performance
-  - name: installing preload (performance tools)
-    ansible.builtin.apt:
-      name: preload
-      state: present
-    become: true
-    tags: performance
