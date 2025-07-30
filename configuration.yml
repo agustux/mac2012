@@ -239,6 +239,9 @@
   - name: installing and enabling blur-my-shell and openweather-refined
     ansible.builtin.shell: "{{ playbook_dir }}/files/gnome-extensions.sh"
     tags: gnome-extensions
+  - name: disabling ubuntu dock
+    ansible.builtin.shell: gnome-extensions disable ubuntu-dock@ubuntu.com
+    tags: gnome-extensions
 
   - name: copying service file for performance mode on cpu
     ansible.builtin.copy:
