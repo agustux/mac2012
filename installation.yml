@@ -25,6 +25,7 @@
       - { name: gnome-user-docs }
       - { name: gnome-characters }
       - { name: gnome-logs }
+    become: true
     tags: purging
   - name: purging Ubuntu bloat
     ansible.builtin.apt:
@@ -37,6 +38,7 @@
       - { name: ubuntu-docs }
       - { name: orca }
       - { name: brltty }
+    become: true
     tags: purging
 
   - name: installing xkeycaps
