@@ -31,7 +31,7 @@
       name: "{{ item.name }}"
       state: absent
       purge: true
-      autoremove: purge
+      autoremove: true
     loop:
       - { name: ubuntu-pro-client* }
       - { name: ubuntu-docs }
