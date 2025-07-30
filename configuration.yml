@@ -180,6 +180,7 @@
     tags: bluetooth
   - name: restarting bluetooth
     ansible.builtin.shell: "sudo /etc/init.d/bluetooth restart"
+    become: true
     tags: bluetooth
   - name: loading codecs for airpods compatibility
     ansible.builtin.blockinfile:
