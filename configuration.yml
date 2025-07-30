@@ -88,6 +88,7 @@
     become: true
     tags:
     - thinkpad
+    - thinkfan
     - never
   - name: fixing thinkpad fan-control bool in modprobe
     ansible.builtin.copy:
@@ -97,12 +98,14 @@
     become: true
     tags:
     - thinkpad
+    - thinkfan
     - never
   - name: loading thinkfan fan_control bool
     ansible.builtin.shell: sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi
     become: true
     tags:
     - thinkpad
+    - thinkfan
     - never
   - name: adding MAC address randomizing conf to NetworkManager
     ansible.builtin.copy:
@@ -113,6 +116,7 @@
     tags:
     - thinkpad
     - never
+    - mac-randomizer
 
   - name: creating .config/autostart directory for camera patch
     ansible.builtin.file:
@@ -186,12 +190,6 @@
         }
 
     become: true
-    tags: bluetooth
-  - name: restarting wireplumber
-    ansible.builtin.systemd_service:
-      name: wireplumber
-      state: restarted
-      scope: user
     tags: bluetooth
 
   - name: creating .ssh directory
