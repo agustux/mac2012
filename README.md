@@ -14,8 +14,8 @@ python3 -m venv ansible_venv
 mkdir ansible
 curl -LO https://github.com/agustux/mac2012/archive/refs/tags/v1.1.5.tar.gz
 tar -xvf $HOME/v1.1.5.tar.gz -C ~
-ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/installation.yml
-ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/configuration.yml
+ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/installation.yml --ask-become-pass
+ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/configuration.yml --ask-become-pass
 sudo dpkg-reconfigure libdvd-pkg
 ```
 
@@ -42,6 +42,6 @@ python3 -m venv ansible_venv
 mkdir ansible
 curl -LO https://github.com/agustux/mac2012/archive/refs/tags/v1.1.5.tar.gz
 tar -xvf $HOME/v1.1.5.tar.gz -C ~
-ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/installation.yml --skip-tags "xkeycaps,mac-keyboard,debconf-utils,libdvd-pkg,optical-drive,performance"
-ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/configuration.yml --skip-tags "mac-keyboard,xmodmap,mac-fan,dconf,performance"
+ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/installation.yml --skip-tags "xkeycaps,mac-keyboard,debconf-utils,libdvd-pkg,optical-drive,performance" --ask-become-pass
+ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/configuration.yml --skip-tags "mac-keyboard,xmodmap,mac-fan,dconf,performance" --ask-become-pass
 ```
