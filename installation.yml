@@ -7,6 +7,36 @@
     become: true
     tags: slow
 
+  - name: purging snap
+    ansible.builtin.script: "{{ playbook_dir }}/files/remove-snap.sh"
+    become: true
+    tags: purging
+  - name: purging GNOME bloat
+    ansible.builtin.apt:
+      name: "{{ item.name }}"
+      state: absent
+      purge: true
+    loop:
+      - { name: software-properties-* }
+      - { name: gnome-font-viewer }
+      - { name: update-manager }
+      - { name: gnome-remote-desktop }
+      - { name: gnome-user-docs }
+      - { name: gnome-characters }
+      - { name: gnome-logs }
+    tags: purging
+  - name: purging Ubuntu bloat
+    ansible.builtin.apt:
+      name: "{{ item.name }}"
+      state: absent
+      purge: true
+    loop:
+      - { name: ubuntu-pro-client* }
+      - { name: ubuntu-docs }
+      - { name: orca }
+      - { name: brltty }
+    tags: purging
+
   - name: installing xkeycaps
     ansible.builtin.apt:
       name: xkeycaps
@@ -140,11 +170,6 @@
       state: present
     become: true
     tags: ufw
-
-  - name: purging snap
-    ansible.builtin.script: "{{ playbook_dir }}/files/remove-snap.sh"
-    become: true
-    tags: nosnap
 
   - name: downloading localsend .deb
     ansible.builtin.get_url:
