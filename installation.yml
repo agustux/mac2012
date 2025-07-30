@@ -16,6 +16,7 @@
       name: "{{ item.name }}"
       state: absent
       purge: true
+      autoremove: true
     loop:
       - { name: software-properties-* }
       - { name: gnome-font-viewer }
@@ -30,6 +31,7 @@
       name: "{{ item.name }}"
       state: absent
       purge: true
+      autoremove: purge
     loop:
       - { name: ubuntu-pro-client* }
       - { name: ubuntu-docs }
