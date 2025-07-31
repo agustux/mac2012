@@ -209,7 +209,7 @@
     tags: jetbrains
   - name: downloading jetbrains toolbox
     ansible.builtin.get_url:
-      url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.7.0.48109.tar.gz
+      url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.6.2.41321.tar.gz
       dest: /opt/jetbrains.tar.gz
     become: true
     tags: jetbrains
@@ -220,11 +220,11 @@
     become: true
     tags: jetbrains
   - name: executing installer for toolbox
-    ansible.builtin.script: /opt/jetbrains-toolbox-2.7.0.48109/bin/jetbrains-toolbox
+    ansible.builtin.script: /opt/jetbrains-toolbox-2.6.2.41321/jetbrains-toolbox
     tags: jetbrains
   - name: cleaning up jetbrains archive (1/2)
     ansible.builtin.file:
-      path: /opt/jetbrains-toolbox-2.7.0.48109/
+      path: /opt/jetbrains-toolbox-2.6.2.41321/
       state: absent
     become: true
     tags: jetbrains
