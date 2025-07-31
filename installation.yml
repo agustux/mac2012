@@ -18,7 +18,6 @@
       purge: true
       autoremove: true
     loop:
-      - { name: software-properties-* }
       - { name: gnome-font-viewer }
       - { name: update-manager }
       - { name: gnome-remote-desktop }
@@ -208,7 +207,7 @@
     tags: jetbrains
   - name: downloading jetbrains toolbox
     ansible.builtin.get_url:
-      url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.6.2.41321.tar.gz
+      url: https://download.jetbrains.com/toolbox/jetbrains-toolbox-2.7.0.48109.tar.gz
       dest: /opt/jetbrains.tar.gz
     become: true
     tags: jetbrains
