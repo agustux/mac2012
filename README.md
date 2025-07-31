@@ -45,3 +45,8 @@ tar -xvf $HOME/v1.1.5.tar.gz -C ~
 ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/installation.yml --skip-tags "xkeycaps,mac-keyboard,debconf-utils,libdvd-pkg,optical-drive,performance" --ask-become-pass
 ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/configuration.yml --skip-tags "mac-keyboard,xmodmap,mac-fan,dconf,performance" --ask-become-pass
 ```
+
+To install all the thinkpad configs, run this AFTER restarting after the main parts of the playbook:
+```
+ANSIBLE_CONFIG=mac2012-1.1.5/ansible.cfg ./ansible_venv/bin/ansible-playbook mac2012-1.1.5/configuration.yml --tags thinkpad --ask-become-pass
+```
