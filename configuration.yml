@@ -238,7 +238,7 @@
     become: true
     tags: localsend
 
-  - name: installing and enabling blur-my-shell and openweather-refined
+  - name: installing and enabling GNOME extensions
     ansible.builtin.shell: "{{ playbook_dir }}/files/gnome-extensions.sh"
     tags: gnome-extensions
   - name: disabling ubuntu dock
