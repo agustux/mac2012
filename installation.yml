@@ -37,6 +37,8 @@
       - { name: ubuntu-docs }
       - { name: orca }
       - { name: brltty }
+      - { name: remmina }
+      - { name: transmission-* }
     become: true
     tags: purging
 
