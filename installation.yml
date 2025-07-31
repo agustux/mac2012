@@ -220,7 +220,7 @@
     become: true
     tags: jetbrains
   - name: executing installer for toolbox
-    ansible.builtin.script: /opt/jetbrains-toolbox-2.7.0.48109/jetbrains-toolbox
+    ansible.builtin.script: /opt/jetbrains-toolbox-2.7.0.48109/bin/jetbrains-toolbox
     tags: jetbrains
   - name: cleaning up jetbrains archive (1/2)
     ansible.builtin.file:
