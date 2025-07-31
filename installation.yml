@@ -38,6 +38,7 @@
       - { name: brltty }
       - { name: remmina }
       - { name: transmission-* }
+      - { name: deja-dup }
     become: true
     tags: purging
 
