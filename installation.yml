@@ -241,7 +241,7 @@
     become: true
     tags: virtual-machines
   - name: adding quickemu repository
-    ansible.builtin.shell: 'sudo apt-add-repository ppa:flexiondotorg/quickemu'
+    ansible.builtin.shell: 'sudo apt-add-repository ppa:flexiondotorg/quickemu -y'
     become: true
     tags: virtual-machines
   - name: updating cache and installing quickemu
