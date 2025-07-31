@@ -19,7 +19,6 @@
       autoremove: true
     loop:
       - { name: gnome-font-viewer }
-      - { name: update-manager }
       - { name: gnome-remote-desktop }
       - { name: gnome-user-docs }
       - { name: gnome-characters }
