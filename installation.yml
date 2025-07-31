@@ -218,11 +218,11 @@
     become: true
     tags: jetbrains
   - name: executing installer for toolbox
-    ansible.builtin.script: /opt/jetbrains-toolbox-2.6.2.41321/jetbrains-toolbox
+    ansible.builtin.script: /opt/jetbrains-toolbox-2.7.0.48109/jetbrains-toolbox
     tags: jetbrains
   - name: cleaning up jetbrains archive (1/2)
     ansible.builtin.file:
-      path: /opt/jetbrains-toolbox-2.6.2.41321/
+      path: /opt/jetbrains-toolbox-2.7.0.48109/
       state: absent
     become: true
     tags: jetbrains
